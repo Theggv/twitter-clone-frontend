@@ -91,7 +91,7 @@ const TopicRecomendations: React.FC<TopicRecomendationsProps> = ({
 			titleButton={() => (
 				<ButtonWithIcon
 					className={classes.button}
-					icon={() => <SettingsIcon />}
+					icon={<SettingsIcon />}
 				/>
 			)}
 		>

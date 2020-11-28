@@ -74,7 +74,7 @@ const ContentBlock: React.FC = (): React.ReactElement => {
 			<div className={classes.homeBlockTitle}>Главная</div>
 			<ButtonWithIcon
 				className={classes.homeBlockButton}
-				icon={() => <ShiningIcon />}
+				icon={<ShiningIcon />}
 			></ButtonWithIcon>
 		</div>
 	);

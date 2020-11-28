@@ -166,7 +166,7 @@ const Tweet: React.FC<TweetProps> = ({
 	const classes = useStyles();
 
 	const ButtonWithNumber: React.FC<{
-		icon: () => React.ReactElement;
+		icon: React.ReactNode;
 		className: string;
 		number?: number;
 		onClick?: () => void;
@@ -202,22 +202,22 @@ const Tweet: React.FC<TweetProps> = ({
 			<div className={classes.contentBlock}>{text}</div>
 			<div className={classes.footer}>
 				<ButtonWithNumber
-					icon={() => <CommentIcon />}
+					icon={<CommentIcon />}
 					className={clsx(classes.footerIcon, classes.defaultHover)}
 					number={5}
 				/>
 				<ButtonWithNumber
-					icon={() => <RetweetIcon />}
+					icon={<RetweetIcon />}
 					className={clsx(classes.footerIcon, classes.greenHover)}
 					number={3}
 				/>
 				<ButtonWithNumber
-					icon={() => <LikeIcon />}
+					icon={<LikeIcon />}
 					className={clsx(classes.footerIcon, classes.redHover)}
 					number={50}
 				/>
 				<ButtonWithNumber
-					icon={() => <OptionsIcon />}
+					icon={<OptionsIcon />}
 					className={clsx(classes.footerIcon, classes.defaultHover)}
 				/>
 			</div>

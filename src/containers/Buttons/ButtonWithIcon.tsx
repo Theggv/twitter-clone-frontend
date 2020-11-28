@@ -10,10 +10,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ButtonWithIconProps {
-	children?: React.ReactNode;
 	className?: string;
 	size?: number;
-	icon: () => React.ReactElement;
+	icon: React.ReactNode;
 	onClick?: () => void;
 }
 
@@ -33,7 +32,7 @@ const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
 				color='primary'
 				onClick={() => onClick && onClick()}
 			>
-				{icon()}
+				{icon}
 			</IconButton>
 			{children}
 		</div>

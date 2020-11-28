@@ -61,7 +61,7 @@ const ModalWindow: React.FC<
 					{!disableExitButton && (
 						<ButtonWithIcon
 							onClick={onClose}
-							icon={() => <CloseIcon />}
+							icon={<CloseIcon />}
 						/>
 					)}
 					<div className={classes.titleContent}>

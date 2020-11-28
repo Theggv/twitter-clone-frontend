@@ -195,17 +195,14 @@ const CreatePost: React.FC<CreatePostProps> = ({
 					<ButtonFileDialog size={16}></ButtonFileDialog>
 					<ButtonWithIcon
 						size={40}
-						icon={() => <GifIcon style={{ fontSize: 19 }} />}
+						icon={<GifIcon style={{ fontSize: 19 }} />}
 					/>
 					{matches && (
-						<ButtonWithIcon size={40} icon={() => <PollIcon />} />
+						<ButtonWithIcon size={40} icon={<PollIcon />} />
 					)}
-					<ButtonWithIcon size={40} icon={() => <EmojiIcon />} />
+					<ButtonWithIcon size={40} icon={<EmojiIcon />} />
 					{matches && (
-						<ButtonWithIcon
-							size={40}
-							icon={() => <ScheduleIcon />}
-						/>
+						<ButtonWithIcon size={40} icon={<ScheduleIcon />} />
 					)}
 				</div>
 				<div className={classes.addTweetArea}>
