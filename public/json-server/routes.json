@@ -1,4 +1,0 @@
-{
-	"/api/tweets/page/:page": "/tweets?_page=:page",
-	"/api/*": "/$1"
-}
