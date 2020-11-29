@@ -6,8 +6,7 @@ import { ContainerBase } from '../../../../containers/Containers';
 import ShiningIcon from '../../../../containers/Icons/ShiningIcon';
 
 import CreatePost from './CreatePost';
-import Tweet from './Tweet';
-import ButtonWithIcon from '../../../../containers/Buttons/ButtonWithIcon';
+import { TweetMini } from './Tweet/TweetMini';
 import ContentDivider from './ContentDivider';
 import UsersSuggestion from '../Suggestions/ContentBlock/UsersSuggestion';
 
@@ -19,6 +18,7 @@ import {
 	TweetInterface,
 } from '../../../../store/ducks/tweets';
 import { LoaderCircular } from '../../../../containers/Loaders';
+import { ButtonWithIcon } from '../../../../containers/Buttons';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -91,7 +91,7 @@ const ContentBlock: React.FC = (): React.ReactElement => {
 					<>
 						{tweets.map((item: TweetInterface, index: number) => (
 							<div key={index}>
-								<Tweet {...item} />
+								<TweetMini {...item} />
 								{index === 3 && (
 									<React.Fragment>
 										<ContentDivider />

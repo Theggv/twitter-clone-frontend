@@ -1,6 +1,5 @@
 import { IconButton, makeStyles } from '@material-ui/core';
 import React from 'react';
-import clsx from 'clsx';
 
 import MoreIcon from '@material-ui/icons/MoreHoriz';
 
@@ -8,12 +7,12 @@ import CommentIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import RetweetIcon from '@material-ui/icons/Replay';
 import LikeIcon from '@material-ui/icons/FavoriteBorder';
 import OptionsIcon from '@material-ui/icons/KeyboardArrowUp';
-import ButtonWithIcon from '../../../../containers/Buttons/ButtonWithIcon';
-import { TweetInterface } from '../../../../store/ducks/tweets';
+import { TweetInterface } from '../../../../../store/ducks/tweets';
 import {
 	ContainerAvatar,
 	ContainerItemTitle,
-} from '../../../../containers/Containers';
+} from '../../../../../containers/Containers';
+import { ButtonCounter } from './ButtonCounter';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -77,63 +76,6 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		justifyContent: 'space-between',
 	},
-	buttonWithNumber: {
-		display: 'flex',
-		alignItems: 'center',
-	},
-	footerButtonIcon: {
-		width: 30,
-		height: 30,
-	},
-	footerIcon: {
-		fontSize: 15,
-		color: 'rgb(91, 112, 131)',
-
-		'& svg': {
-			fontSize: 20,
-			color: 'rgb(91, 112, 131)',
-		},
-	},
-	footerIconNumber: {
-		padding: '0 4px',
-		fontSize: 13,
-	},
-	defaultHover: {
-		'&:hover': {
-			'& svg': {
-				color: theme.palette.primary.main,
-			},
-			'& div': {
-				color: theme.palette.primary.main,
-			},
-		},
-	},
-	greenHover: {
-		'&:hover': {
-			'& svg': {
-				color: 'rgb(23, 191, 99)',
-			},
-			'& div': {
-				color: 'rgb(23, 191, 99)',
-			},
-			'& .MuiIconButton-colorPrimary': {
-				backgroundColor: 'rgba(23, 191, 99, 0.1)',
-			},
-		},
-	},
-	redHover: {
-		'&:hover': {
-			'& svg': {
-				color: 'rgb(224, 36, 94)',
-			},
-			'& div': {
-				color: 'rgb(224, 36, 94)',
-			},
-			'& .MuiIconButton-colorPrimary': {
-				backgroundColor: 'rgba(224, 36, 94, 0.1)',
-			},
-		},
-	},
 }));
 
 interface TweetProps extends TweetInterface {
@@ -155,7 +97,7 @@ const defaultTweet: TweetInterface = {
 		'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium possimus amet sapiente quas mollitia perferendis recusandae excepturi non, corrupti fugit doloremque laboriosam eaque asperiores animi minima, illum, doloribus quasi cupiditate.',
 };
 
-const Tweet: React.FC<TweetProps> = ({
+export const TweetMini: React.FC<TweetProps> = ({
 	posted,
 	comments,
 	retweets,
@@ -164,23 +106,6 @@ const Tweet: React.FC<TweetProps> = ({
 	text = defaultTweet.text!,
 }): React.ReactElement => {
 	const classes = useStyles();
-
-	const ButtonWithNumber: React.FC<{
-		icon: React.ReactNode;
-		className: string;
-		number?: number;
-		onClick?: () => void;
-	}> = ({ icon, className, number, onClick }) => (
-		<ButtonWithIcon
-			icon={icon}
-			className={className}
-			onClick={() => onClick && onClick()}
-		>
-			{number ? (
-				<div className={classes.footerIconNumber}>{number}</div>
-			) : null}
-		</ButtonWithIcon>
-	);
 
 	const titleButton = (
 		<IconButton className={classes.moreIcon} color='primary'>
@@ -201,28 +126,25 @@ const Tweet: React.FC<TweetProps> = ({
 			</ContainerItemTitle>
 			<div className={classes.contentBlock}>{text}</div>
 			<div className={classes.footer}>
-				<ButtonWithNumber
-					icon={<CommentIcon />}
-					className={clsx(classes.footerIcon, classes.defaultHover)}
-					number={5}
-				/>
-				<ButtonWithNumber
+				<ButtonCounter icon={<CommentIcon />} text={5} />
+				<ButtonCounter
 					icon={<RetweetIcon />}
-					className={clsx(classes.footerIcon, classes.greenHover)}
-					number={3}
+					hoverProps={{
+						color: 'rgb(23, 191, 99)',
+						backgroundColor: 'rgba(23, 191, 99, 0.1)',
+					}}
+					text={3}
 				/>
-				<ButtonWithNumber
+				<ButtonCounter
 					icon={<LikeIcon />}
-					className={clsx(classes.footerIcon, classes.redHover)}
-					number={50}
+					hoverProps={{
+						color: 'rgb(224, 36, 94)',
+						backgroundColor: 'rgba(224, 36, 94, 0.1)',
+					}}
+					text={3}
 				/>
-				<ButtonWithNumber
-					icon={<OptionsIcon />}
-					className={clsx(classes.footerIcon, classes.defaultHover)}
-				/>
+				<ButtonCounter icon={<OptionsIcon />} />
 			</div>
 		</ContainerAvatar>
 	);
 };
-
-export default Tweet;

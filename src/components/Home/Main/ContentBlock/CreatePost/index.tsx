@@ -10,9 +10,11 @@ import GifIcon from '../../../../../containers/Icons/GifIcon';
 import PollIcon from '@material-ui/icons/PollOutlined';
 import EmojiIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import ScheduleIcon from '@material-ui/icons/ScheduleOutlined';
-import ButtonWithIcon from '../../../../../containers/Buttons/ButtonWithIcon';
-import ButtonFileDialog from '../../../../../containers/Buttons/ButtonFileDialog';
 import { ContainerAvatar } from '../../../../../containers/Containers';
+import {
+	ButtonFileDialog,
+	ButtonWithIcon,
+} from '../../../../../containers/Buttons';
 
 const useStyles = makeStyles((theme) => ({
 	root: {

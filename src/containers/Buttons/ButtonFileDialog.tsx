@@ -17,7 +17,7 @@ interface ButtonFileDialogProps {
 	onClick?: () => void;
 }
 
-const ButtonFileDialog: React.FC<ButtonFileDialogProps> = ({
+export const ButtonFileDialog: React.FC<ButtonFileDialogProps> = ({
 	className,
 	size = 30,
 	onClick,
@@ -44,5 +44,3 @@ const ButtonFileDialog: React.FC<ButtonFileDialogProps> = ({
 		</div>
 	);
 };
-
-export default ButtonFileDialog;

@@ -3,11 +3,11 @@ import React from 'react';
 import Topic, { TopicProps } from './Topic';
 
 import SettingsIcon from '@material-ui/icons/Settings';
-import ButtonWithIcon from '../../../../../../containers/Buttons/ButtonWithIcon';
 import {
 	ContainerItem,
 	ContainerSidebar,
 } from '../../../../../../containers/Containers';
+import { ButtonWithIcon } from '../../../../../../containers/Buttons';
 
 const useStyles = makeStyles((theme) => ({
 	button: {

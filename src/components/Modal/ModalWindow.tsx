@@ -2,8 +2,8 @@ import { Dialog, makeStyles } from '@material-ui/core';
 import React from 'react';
 
 import CloseIcon from '@material-ui/icons/Close';
-import ButtonWithIcon from '../../containers/Buttons/ButtonWithIcon';
 import { ContainerItem } from '../../containers/Containers';
+import { ButtonWithIcon } from '../../containers/Buttons';
 
 const useStyles = makeStyles((theme) => ({
 	dialog: {

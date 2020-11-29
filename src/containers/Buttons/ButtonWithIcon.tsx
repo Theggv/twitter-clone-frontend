@@ -14,21 +14,23 @@ interface ButtonWithIconProps {
 	size?: number;
 	icon: React.ReactNode;
 	onClick?: () => void;
+	style?: React.CSSProperties;
 }
 
-const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
+export const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
 	children,
 	className,
 	size = 30,
 	icon,
 	onClick,
+	style,
 }) => {
 	const classes = useStyles();
 
 	return (
 		<div className={clsx(classes.root, className)}>
 			<IconButton
-				style={{ width: size, height: size }}
+				style={{ width: size, height: size, ...style }}
 				color='primary'
 				onClick={() => onClick && onClick()}
 			>
@@ -38,5 +40,3 @@ const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
 		</div>
 	);
 };
-
-export default ButtonWithIcon;

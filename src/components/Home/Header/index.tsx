@@ -21,7 +21,7 @@ import {
 } from '../../../store/ducks/loading';
 import { LoaderCircular } from '../../../containers/Loaders';
 import { HeaderButton } from '../../../containers/Buttons/Header/HeaderButton';
-import ButtonWithIcon from '../../../containers/Buttons/ButtonWithIcon';
+import { ButtonWithIcon } from '../../../containers/Buttons';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
