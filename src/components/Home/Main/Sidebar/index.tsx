@@ -56,9 +56,11 @@ const SideBlock: React.FC = (): React.ReactElement | null => {
 	React.useEffect(() => {
 		dispatch(setSidebarLoadingState(LoadingState.LOADED));
 		dispatch(fetchRecommended());
-	}, [dispatch]);
 
-	React.useEffect(() => {}, [dispatch]);
+		return () => {
+			dispatch(setSidebarLoadingState(LoadingState.NEVER));
+		};
+	}, [dispatch]);
 
 	return (
 		<ContainerBase className={classes.root}>

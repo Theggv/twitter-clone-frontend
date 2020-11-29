@@ -2,8 +2,6 @@ import { Button, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import React, { useState } from 'react';
 import { ContainerBase } from '../../../containers/Containers';
 
-import { IconButton } from '@material-ui/core';
-
 import TwitterIcon from '@material-ui/icons/Twitter';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HashtagIcon from '../../../containers/Icons/HashtagIcon';
@@ -22,6 +20,8 @@ import {
 	setHeaderLoadingState,
 } from '../../../store/ducks/loading';
 import { LoaderCircular } from '../../../containers/Loaders';
+import { HeaderButton } from '../../../containers/Buttons/Header/HeaderButton';
+import ButtonWithIcon from '../../../containers/Buttons/ButtonWithIcon';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -50,20 +50,21 @@ const useStyles = makeStyles((theme) => ({
 	menuWrapper: {
 		[theme.breakpoints.down('sm')]: {
 			padding: 0,
-			justifyContent: 'center',
+			alignItems: 'center',
 		},
 		[theme.breakpoints.between('sm', 'lg')]: {
-			padding: '0 18px 0 0',
-			justifyContent: 'flex-end',
+			padding: '0 20px 0 0',
+			alignItems: 'flex-end',
 		},
 		[theme.breakpoints.up('lg')]: {
 			padding: '0 10px',
-			justifyContent: 'flex-start',
+			alignItems: 'flex-start',
 		},
 
 		margin: 0,
 		flex: '1 1',
 		display: 'flex',
+		flexDirection: 'column',
 		justifyContent: 'flex-end',
 		paddingRight: 18,
 
@@ -78,42 +79,12 @@ const useStyles = makeStyles((theme) => ({
 			display: 'block',
 		},
 	},
-	buttonTwitter: {
-		padding: '6px',
-		margin: '0 1px',
-		borderRadius: '100px',
-		fontFamily: theme.typography.fontFamily,
-		color: theme.palette.text.primary,
-		fontSize: 19,
-		fontWeight: 700,
+	buttonsContainer: {
+		flex: '1',
 
-		'& svg': {
-			fontSize: 30,
-			padding: '2px 0',
-			color: theme.palette.text.primary,
-		},
-
-		'&:hover': {
-			color: theme.palette.primary.main,
-		},
-	},
-	buttonTwitterSelected: {
-		padding: '6px',
-		margin: '0 1px',
-		borderRadius: '100px',
-		fontFamily: theme.typography.fontFamily,
-		color: theme.palette.primary.main,
-		fontSize: 19,
-		fontWeight: 700,
-
-		'& svg': {
-			fontSize: 30,
-			padding: '2px 0',
-			color: theme.palette.primary.main,
-		},
-	},
-	buttonText: {
-		margin: '0 20px',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'inherit',
 	},
 	buttonCreatePost: {
 		marginTop: 10.5,
@@ -121,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
 		minHeight: 49,
 	},
 	twitterIcon: {
-		margin: '3px',
+		margin: '2px -3px 4px 1px',
 
 		'& svg': {
 			fontSize: 32,
@@ -162,122 +133,81 @@ const Header: React.FC = (): React.ReactElement | null => {
 		);
 	}
 
-	const TwitterIconButton: React.FC<{
-		name?: string;
-		selected?: boolean;
-		onClick?: () => void;
-	}> = ({ children, name = '', selected = false, onClick }) => {
-		const iconButtonClassName = () =>
-			selection === name || selected
-				? classes.buttonTwitterSelected
-				: classes.buttonTwitter;
-
-		return (
-			<IconButton
-				color='primary'
-				className={iconButtonClassName()}
-				onClick={onClick}
-			>
-				{children}
-				{matches ? (
-					<div className={classes.buttonText}>{name}</div>
-				) : null}
-			</IconButton>
-		);
-	};
-
 	return (
 		<Wrapper>
+			<ButtonWithIcon
+				className={classes.twitterIcon}
+				size={49}
+				icon={<TwitterIcon />}
+			/>
 			{isAuth ? (
-				<ul>
-					<li>
-						<IconButton
-							color='primary'
-							className={
-								classes.buttonTwitterSelected +
-								' ' +
-								classes.twitterIcon
-							}
-						>
-							<TwitterIcon />
-						</IconButton>
-					</li>
-					<li>
-						<TwitterIconButton name='Главная'>
-							<HomeIcon />
-						</TwitterIconButton>
-					</li>
-					<li>
-						<TwitterIconButton name='Поиск'>
-							<HashtagIcon />
-						</TwitterIconButton>
-					</li>
-					<li>
-						<TwitterIconButton name='Уведомления'>
-							<NotificationsIcon />
-						</TwitterIconButton>
-					</li>
-					<li>
-						<TwitterIconButton name='Сообщения'>
-							<MailOutlineIcon />
-						</TwitterIconButton>
-					</li>
-					<li>
-						<TwitterIconButton name='Профиль'>
-							<PersonIcon />
-						</TwitterIconButton>
-					</li>
-					<li>
-						<TwitterIconButton name='Ещё'>
-							<MoreHorizIcon />
-						</TwitterIconButton>
-					</li>
-					<li>
-						{matches ? (
-							<Button
-								variant='contained'
-								color='primary'
-								fullWidth
-								className={classes.buttonCreatePost}
-								onClick={() => setCreatePostVisible(true)}
-							>
-								Твитнуть
-							</Button>
-						) : (
-							<TwitterIconButton
-								selected
-								onClick={() => setCreatePostVisible(true)}
-							>
-								<AddCircleIcon />
-							</TwitterIconButton>
-						)}
-					</li>
-				</ul>
+				<div className={classes.buttonsContainer}>
+					<HeaderButton
+						icon={<HomeIcon />}
+						text='Главная'
+						showText={matches}
+					/>
+					<HeaderButton
+						icon={<HashtagIcon />}
+						text='Поиск'
+						showText={matches}
+					/>
+					<HeaderButton
+						icon={<NotificationsIcon />}
+						text='Уведомления'
+						showText={matches}
+					/>
+					<HeaderButton
+						icon={<MailOutlineIcon />}
+						text='Сообщения'
+						showText={matches}
+					/>
+					<HeaderButton
+						icon={<PersonIcon />}
+						text='Профиль'
+						showText={matches}
+					/>
+					<HeaderButton
+						icon={<MoreHorizIcon />}
+						text='Ещё'
+						showText={matches}
+					/>
+				</div>
 			) : (
-				<ul>
-					<li>
-						<IconButton
-							className={
-								classes.buttonTwitterSelected +
-								' ' +
-								classes.twitterIcon
-							}
-						>
-							<TwitterIcon color='primary' />
-						</IconButton>
-					</li>
-					<li>
-						<TwitterIconButton name='Поиск'>
-							<HashtagIcon />
-						</TwitterIconButton>
-					</li>
-					<li>
-						<TwitterIconButton name='Настройки'>
-							<SettingsIcon />
-						</TwitterIconButton>
-					</li>
-				</ul>
+				<div className={classes.buttonsContainer}>
+					<HeaderButton
+						icon={<HashtagIcon />}
+						text='Поиск'
+						showText={matches}
+					/>
+					<HeaderButton
+						icon={<SettingsIcon />}
+						text='Настройки'
+						showText={matches}
+					/>
+				</div>
 			)}
+			{isAuth ? (
+				matches ? (
+					<Button
+						variant='contained'
+						color='primary'
+						fullWidth
+						className={classes.buttonCreatePost}
+						onClick={() => setCreatePostVisible(true)}
+					>
+						Твитнуть
+					</Button>
+				) : (
+					<div className={classes.buttonsContainer}>
+						<HeaderButton
+							icon={<AddCircleIcon />}
+							selected
+							onClick={() => setCreatePostVisible(true)}
+						/>
+					</div>
+				)
+			) : null}
 			<CreatePostModal
 				visible={createPostVisible}
 				onClose={() => setCreatePostVisible(false)}

@@ -7,7 +7,6 @@ import {
 	selectHeaderLoaded,
 	selectMainLoading,
 	setMainLoadingState,
-	setSidebarLoadingState,
 } from '../../../store/ducks/loading';
 import ContentBlock from './ContentBlock';
 import SideBar from './Sidebar';
@@ -42,10 +41,12 @@ const Main: React.FC = () => {
 	const isHeaderLoaded = useSelector(selectHeaderLoaded);
 	const isLoading = useSelector(selectMainLoading);
 
-	dispatch(setSidebarLoadingState(LoadingState.LOADING));
-
 	React.useEffect(() => {
 		dispatch(setMainLoadingState(LoadingState.LOADED));
+
+		return () => {
+			dispatch(setMainLoadingState(LoadingState.NEVER));
+		};
 	}, [dispatch]);
 
 	return (
