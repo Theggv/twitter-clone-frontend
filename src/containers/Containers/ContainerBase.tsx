@@ -3,20 +3,33 @@ import clsx from 'clsx';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
-	root: {
+	root: {},
+	border: {
 		borderBottom: '1px solid rgba(128, 128, 128, 0.15)',
 	},
 }));
 
 export interface ContainerBaseProps {
 	className?: string;
+	noBorder?: boolean;
 }
 
 export const ContainerBase: React.FC<ContainerBaseProps> = ({
 	children,
 	className,
+	noBorder = false,
 }): React.ReactElement => {
-	const style = useStyles();
+	const classes = useStyles();
 
-	return <div className={clsx(style.root, className)}>{children}</div>;
+	return (
+		<div
+			className={clsx(
+				classes.root,
+				!noBorder && classes.border,
+				className
+			)}
+		>
+			{children}
+		</div>
+	);
 };

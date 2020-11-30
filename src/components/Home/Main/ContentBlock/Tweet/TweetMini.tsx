@@ -2,6 +2,7 @@ import { IconButton, makeStyles } from '@material-ui/core';
 import React from 'react';
 
 import MoreIcon from '@material-ui/icons/MoreHoriz';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 
 import CommentIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import RetweetIcon from '@material-ui/icons/Replay';
@@ -13,6 +14,7 @@ import {
 	ContainerItemTitle,
 } from '../../../../../containers/Containers';
 import { ButtonCounter } from './ButtonCounter';
+import { TweetImages } from './TweetImages';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -48,6 +50,10 @@ const useStyles = makeStyles((theme) => ({
 		fontWeight: 700,
 		marginRight: 5,
 	},
+	icon: {
+		margin: '0 0 -3px 3px',
+		fontSize: 18,
+	},
 	headerUrl: {
 		fontWeight: 400,
 		color: 'rgb(91, 112, 131)',
@@ -69,6 +75,13 @@ const useStyles = makeStyles((theme) => ({
 	contentBlock: {
 		textAlign: 'left',
 	},
+	media: {
+		marginTop: 10,
+		padding: 0,
+		borderRadius: 16,
+		border: '1px solid rgba(128, 128, 128, 0.15)',
+		overflow: 'hidden',
+	},
 	footer: {
 		marginTop: 5,
 		marginLeft: -5,
@@ -78,11 +91,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-interface TweetProps extends TweetInterface {
+export interface TweetProps extends TweetInterface {
 	posted?: Date;
-	comments?: Array<string>;
-	retweets?: Array<string>;
-	likes?: Array<string>;
+	comments?: number;
+	retweets?: number;
+	likes?: number;
 }
 
 const defaultTweet: TweetInterface = {
@@ -119,21 +132,39 @@ export const TweetMini: React.FC<TweetProps> = ({
 				className={classes.header}
 				titleButton={() => titleButton}
 			>
-				<div className={classes.headerText}>{user.fullName}</div>
+				<div className={classes.headerText}>
+					{user.fullName}
+					{user?.verified && (
+						<VerifiedUserIcon
+							color='primary'
+							className={classes.icon}
+						/>
+					)}
+				</div>
 				<div className={classes.headerUrl}>
 					{`@${user.userName} · 2 ч`}
 				</div>
 			</ContainerItemTitle>
 			<div className={classes.contentBlock}>{text}</div>
+			<div className={classes.media}>
+				<TweetImages
+					media={[
+						'https://pbs.twimg.com/media/EoAUQ46XcAAxU77?format=jpg&name=large',
+						'https://pbs.twimg.com/media/EoAUQ47W8AQwi9B?format=jpg&name=large',
+						'https://pbs.twimg.com/media/EoAUQ47XcAEkYrZ?format=jpg&name=small',
+						'https://pbs.twimg.com/media/EoAUQ48W4AgNEit?format=jpg&name=large',
+					]}
+				></TweetImages>
+			</div>
 			<div className={classes.footer}>
-				<ButtonCounter icon={<CommentIcon />} text={5} />
+				<ButtonCounter icon={<CommentIcon />} text={comments} />
 				<ButtonCounter
 					icon={<RetweetIcon />}
 					hoverProps={{
 						color: 'rgb(23, 191, 99)',
 						backgroundColor: 'rgba(23, 191, 99, 0.1)',
 					}}
-					text={3}
+					text={retweets}
 				/>
 				<ButtonCounter
 					icon={<LikeIcon />}
@@ -141,7 +172,7 @@ export const TweetMini: React.FC<TweetProps> = ({
 						color: 'rgb(224, 36, 94)',
 						backgroundColor: 'rgba(224, 36, 94, 0.1)',
 					}}
-					text={3}
+					text={likes}
 				/>
 				<ButtonCounter icon={<OptionsIcon />} />
 			</div>

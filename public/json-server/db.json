@@ -6,7 +6,8 @@
 			"user": {
 				"fullName": "Weiss Lester",
 				"userName": "martin",
-				"avatarUrl": "https://source.unsplash.com/random/100x100?1"
+				"avatarUrl": "https://source.unsplash.com/random/100x100?1",
+				"verified": true
 			}
 		},
 		{

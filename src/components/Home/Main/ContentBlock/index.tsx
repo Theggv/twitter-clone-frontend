@@ -7,6 +7,7 @@ import ShiningIcon from '../../../../containers/Icons/ShiningIcon';
 
 import CreatePost from './CreatePost';
 import { TweetMini } from './Tweet/TweetMini';
+import { TweetFull } from './Tweet/TweetFull';
 import ContentDivider from './ContentDivider';
 import UsersSuggestion from '../Suggestions/ContentBlock/UsersSuggestion';
 
@@ -19,6 +20,7 @@ import {
 } from '../../../../store/ducks/tweets';
 import { LoaderCircular } from '../../../../containers/Loaders';
 import { ButtonWithIcon } from '../../../../containers/Buttons';
+import { generateNum } from '../../../../helpers';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -52,9 +54,6 @@ const useStyles = makeStyles((theme) => ({
 		padding: 8,
 		marginRight: 7,
 	},
-	contentBlock: {
-		borderTop: '1px solid rgba(128,128,128,0.15)',
-	},
 }));
 
 const ContentBlock: React.FC = (): React.ReactElement => {
@@ -84,14 +83,19 @@ const ContentBlock: React.FC = (): React.ReactElement => {
 			{header}
 			<CreatePost></CreatePost>
 			<ContentDivider></ContentDivider>
-			<div className={classes.contentBlock}>
+			<div>
 				{isLoading ? (
 					<LoaderCircular />
 				) : (
 					<>
 						{tweets.map((item: TweetInterface, index: number) => (
 							<div key={index}>
-								<TweetMini {...item} />
+								<TweetMini
+									likes={generateNum(100000)}
+									comments={generateNum(10000)}
+									retweets={generateNum(10000)}
+									{...item}
+								/>
 								{index === 3 && (
 									<React.Fragment>
 										<ContentDivider />

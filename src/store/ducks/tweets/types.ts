@@ -8,8 +8,9 @@ export enum LoadingState {
 }
 
 export interface TweetInterface {
-	text?: string;
+	createdAtUTC?: Date;
 	user?: UserInterface;
+	text?: string;
 }
 
 export interface TweetsState {

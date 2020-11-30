@@ -36,6 +36,7 @@ export const ContainerItem: React.FC<ContainerItemProps> = ({
 	children,
 	hoverType = 'default',
 	className,
+	noBorder = false,
 }): React.ReactElement => {
 	const classes = useStyles();
 
@@ -48,6 +49,7 @@ export const ContainerItem: React.FC<ContainerItemProps> = ({
 				hoverType === 'bottom' && classes.hoverBottom,
 				hoverType === 'top' && classes.hoverTop
 			)}
+			noBorder={noBorder}
 		>
 			{children}
 		</ContainerBase>

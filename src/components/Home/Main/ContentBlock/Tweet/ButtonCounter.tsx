@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
 		},
 
 		'& svg': {
-			fontSize: 20,
 			color: 'rgb(91, 112, 131)',
 		},
 
@@ -28,6 +27,16 @@ const useStyles = makeStyles((theme) => ({
 			'& .MuiIconButton-colorPrimary': {
 				backgroundColor: 'var(--background-color)',
 			},
+		},
+	},
+	default: {
+		'& svg': {
+			fontSize: 20,
+		},
+	},
+	big: {
+		'& svg': {
+			fontSize: 25,
 		},
 	},
 	text: {
@@ -45,6 +54,7 @@ interface ButtonCounterProps {
 		color: string;
 		backgroundColor?: string;
 	};
+	type?: 'default' | 'big';
 }
 
 export const ButtonCounter: React.FC<ButtonCounterProps> = ({
@@ -56,6 +66,7 @@ export const ButtonCounter: React.FC<ButtonCounterProps> = ({
 		color: theme.palette.primary.main,
 		backgroundColor: 'rgba(29, 161, 242, 0.1)',
 	},
+	type = 'default',
 }) => {
 	const classes = useStyles();
 
@@ -67,12 +78,18 @@ export const ButtonCounter: React.FC<ButtonCounterProps> = ({
 	return (
 		<ButtonWithIcon
 			icon={icon}
-			className={clsx(classes.root, className)}
+			className={clsx(
+				classes.root,
+				type === 'default' && classes.default,
+				type === 'big' && classes.big,
+				className
+			)}
 			onClick={onClick}
 			style={color}
+			size={type === 'default' ? 30 : 40}
 		>
 			{text ? (
-				<div id='text' className={classes.text} style={color}>
+				<div id='text' className={clsx(classes.text)} style={color}>
 					{text}
 				</div>
 			) : null}

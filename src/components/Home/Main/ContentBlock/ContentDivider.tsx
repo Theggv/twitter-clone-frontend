@@ -3,7 +3,10 @@ import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
 	divider: {
-		borderBottom: '8px solid rgb(245, 248, 250)',
+		height: 8,
+		backgroundColor: 'rgb(245, 248, 250)',
+
+		borderBottom: '1px solid rgba(128,128,128,0.15)',
 	},
 }));
 

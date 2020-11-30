@@ -2,6 +2,7 @@ import { IconButton, makeStyles } from '@material-ui/core';
 import React from 'react';
 
 import MoreIcon from '@material-ui/icons/MoreHoriz';
+import { cutNumber } from '../../../../../../helpers';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -54,26 +55,9 @@ export interface TopicProps {
 const Topic: React.FC<TopicProps> = (props): React.ReactElement => {
 	const classes = useStyles();
 
-	const prettifyNumTweets = (numTweets: number) => {
-		if (numTweets < 1000) return numTweets.toString();
-		else if (numTweets < 10000) {
-			const x = numTweets.toString().split('');
-			x.splice(1, 0, ' ');
-			return x.join('');
-		} else if (numTweets < 100000)
-			return Math.round(numTweets / 100) / 10 + ' тыс.';
-		else if (numTweets < 1000000)
-			return Math.round(numTweets / 1000) + ' тыс.';
-		else if (numTweets < 10000000)
-			return Math.round(numTweets / 10000) / 100 + ' млн';
-		else if (numTweets < 100000000)
-			return Math.round(numTweets / 100000) / 10 + ' млн';
-		else return Math.round(numTweets / 1000000) + ' млн';
-	};
-
 	const tweetsNumberDiv = props.numTweets ? (
 		<div className={classes.tweetsNumber}>
-			{'Твитов: ' + prettifyNumTweets(props.numTweets!)}
+			{'Твитов: ' + cutNumber(props.numTweets!)}
 		</div>
 	) : null;
 
