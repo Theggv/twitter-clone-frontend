@@ -19,4 +19,40 @@ export const cutNumber2 = (num: number): string => {
 	else return Math.round(num / 1000000) + ' млн';
 };
 
+export const formatDateDifference = (dateStr: string) => {
+	let date = new Date(dateStr);
+	let curDate = new Date();
+
+	let diff = Math.abs(curDate.getTime() - date.getTime());
+	let msInMin = 1000 * 60;
+	let msInHour = msInMin * 60;
+	let msInDay = msInHour * 24;
+
+	if (diff < msInMin) return Math.round(diff / 1000) + ' с';
+	else if (diff < msInHour) return Math.round(diff / msInMin) + ' м';
+	else if (diff < msInDay) return Math.round(diff / msInHour) + ' ч';
+
+	let formated = `${date.getDate()} ${
+		[
+			'янв.',
+			'фев.',
+			'мар.',
+			'апр.',
+			'мая',
+			'июня',
+			'июля',
+			'авг.',
+			'сент.',
+			'окт.',
+			'нояб.',
+			'дек.',
+		][date.getMonth()]
+	}`;
+
+	if (curDate.getFullYear() !== date.getFullYear())
+		formated += ` ${date.getFullYear()}`;
+
+	return formated;
+};
+
 export const generateNum = (max: number) => Math.round(Math.random() * max);

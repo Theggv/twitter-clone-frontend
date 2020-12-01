@@ -8,13 +8,14 @@ import CommentIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import RetweetIcon from '@material-ui/icons/Replay';
 import LikeIcon from '@material-ui/icons/FavoriteBorder';
 import OptionsIcon from '@material-ui/icons/KeyboardArrowUp';
-import { TweetInterface } from '../../../../../store/ducks/tweets';
 import {
 	ContainerAvatar,
 	ContainerItemTitle,
 } from '../../../../../containers/Containers';
 import { ButtonCounter } from './ButtonCounter';
 import { TweetImages } from './TweetImages';
+import { TweetInterface } from '../../../../../store/ducks/tweet';
+import { formatDateDifference } from '../../../../../helpers';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -91,32 +92,17 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export interface TweetProps extends TweetInterface {
-	posted?: Date;
-	comments?: number;
-	retweets?: number;
-	likes?: number;
-}
-
-const defaultTweet: TweetInterface = {
-	user: {
-		fullName: 'Team Secret',
-		userName: 'teamsecret',
-		verified: true,
-		avatarUrl:
-			'https://pbs.twimg.com/profile_images/1322870988137205760/4UPgWLRP_bigger.jpg',
-	},
-	text:
-		'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium possimus amet sapiente quas mollitia perferendis recusandae excepturi non, corrupti fugit doloremque laboriosam eaque asperiores animi minima, illum, doloribus quasi cupiditate.',
-};
+export interface TweetProps extends TweetInterface {}
 
 export const TweetMini: React.FC<TweetProps> = ({
-	posted,
-	comments,
-	retweets,
-	likes,
-	user = defaultTweet.user!,
-	text = defaultTweet.text!,
+	createdAtUTC,
+	user,
+	text,
+	attachments,
+	commentsCount,
+	likesCount,
+	retweetsCount,
+	retweetsWithCommentCount,
 }): React.ReactElement => {
 	const classes = useStyles();
 
@@ -133,7 +119,7 @@ export const TweetMini: React.FC<TweetProps> = ({
 				titleButton={() => titleButton}
 			>
 				<div className={classes.headerText}>
-					{user.fullName}
+					{user?.fullName}
 					{user?.verified && (
 						<VerifiedUserIcon
 							color='primary'
@@ -142,7 +128,7 @@ export const TweetMini: React.FC<TweetProps> = ({
 					)}
 				</div>
 				<div className={classes.headerUrl}>
-					{`@${user.userName} · 2 ч`}
+					{`@${user?.userName} · ${formatDateDifference(createdAtUTC)}`}
 				</div>
 			</ContainerItemTitle>
 			<div className={classes.contentBlock}>{text}</div>
@@ -157,14 +143,14 @@ export const TweetMini: React.FC<TweetProps> = ({
 				></TweetImages>
 			</div>
 			<div className={classes.footer}>
-				<ButtonCounter icon={<CommentIcon />} text={comments} />
+				<ButtonCounter icon={<CommentIcon />} text={commentsCount} />
 				<ButtonCounter
 					icon={<RetweetIcon />}
 					hoverProps={{
 						color: 'rgb(23, 191, 99)',
 						backgroundColor: 'rgba(23, 191, 99, 0.1)',
 					}}
-					text={retweets}
+					text={retweetsCount + retweetsWithCommentCount}
 				/>
 				<ButtonCounter
 					icon={<LikeIcon />}
@@ -172,7 +158,7 @@ export const TweetMini: React.FC<TweetProps> = ({
 						color: 'rgb(224, 36, 94)',
 						backgroundColor: 'rgba(224, 36, 94, 0.1)',
 					}}
-					text={likes}
+					text={likesCount}
 				/>
 				<ButtonCounter icon={<OptionsIcon />} />
 			</div>

@@ -112,12 +112,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const TweetFull: React.FC<TweetProps> = ({
-	comments,
-	likes,
-	posted,
-	retweets,
-	text,
+	createdAtUTC,
 	user,
+	text,
+	attachments,
+	commentsCount,
+	likesCount,
+	retweetsCount,
+	retweetsWithCommentCount,
 }) => {
 	const classes = useStyles();
 
@@ -167,42 +169,45 @@ export const TweetFull: React.FC<TweetProps> = ({
 					className={classes.moreInfoBlock}
 					hoverType='disabled'
 				>
-					8:12 PM · 26 нояб. 2020 г.·Twitter for iPhone
+					{new Date(createdAtUTC).toLocaleTimeString()} ·{' '}
+					{new Date(createdAtUTC).toLocaleDateString()}·Twitter
 				</ContainerItem>
-				<ContainerItem
-					className={clsx(classes.moreInfoBlock)}
-					hoverType='disabled'
-				>
-					<div className={classes.likesAndRetweetsBlock}>
-						{retweets && (
-							<div className={classes.likesBlock}>
-								<div className={classes.likesBlockBold}>
-									{cutNumber2(retweets)}
+				{(retweetsCount || retweetsWithCommentCount || likesCount) && (
+					<ContainerItem
+						className={clsx(classes.moreInfoBlock)}
+						hoverType='disabled'
+					>
+						<div className={classes.likesAndRetweetsBlock}>
+							{retweetsCount && (
+								<div className={classes.likesBlock}>
+									<div className={classes.likesBlockBold}>
+										{cutNumber2(retweetsCount)}
+									</div>
+									&nbsp;
+									<span>ретвитов</span>
 								</div>
-								&nbsp;
-								<span>ретвитов</span>
-							</div>
-						)}
-						{retweets && (
-							<div className={classes.likesBlock}>
-								<div className={classes.likesBlockBold}>
-									{cutNumber2(retweets)}
+							)}
+							{retweetsWithCommentCount && (
+								<div className={classes.likesBlock}>
+									<div className={classes.likesBlockBold}>
+										{cutNumber2(retweetsWithCommentCount)}
+									</div>
+									&nbsp;
+									<span>твита с цитатами</span>
 								</div>
-								&nbsp;
-								<span>твита с цитатами</span>
-							</div>
-						)}
-						{likes && (
-							<div className={classes.likesBlock}>
-								<div className={classes.likesBlockBold}>
-									{cutNumber2(likes)}
+							)}
+							{likesCount && (
+								<div className={classes.likesBlock}>
+									<div className={classes.likesBlockBold}>
+										{cutNumber2(likesCount)}
+									</div>
+									&nbsp;
+									<span>отметок «Нравится»</span>
 								</div>
-								&nbsp;
-								<span>отметок «Нравится»</span>
-							</div>
-						)}
-					</div>
-				</ContainerItem>
+							)}
+						</div>
+					</ContainerItem>
+				)}
 				<div className={classes.footer}>
 					<ButtonCounter icon={<CommentIcon />} type='big' />
 					<ButtonCounter
