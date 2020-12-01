@@ -4,6 +4,7 @@ import { GlobalLoadingState } from './ducks/loading';
 
 import { RecommendationsState } from './ducks/recommendations';
 import { TopicsState } from './ducks/topics';
+import { TweetState } from './ducks/tweet';
 import { TweetsState } from './ducks/tweets';
 
 import { rootReducer } from './rootReducer';
@@ -15,7 +16,8 @@ const composeEnhancers =
 	(window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export interface RootState {
-	tweets: TweetsState;
+	tweet: TweetState;
+	tweetsList: TweetsState;
 	recommendations: RecommendationsState;
 	topics: TopicsState;
 	loading: GlobalLoadingState;

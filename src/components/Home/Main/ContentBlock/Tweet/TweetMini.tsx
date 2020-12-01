@@ -16,7 +16,7 @@ import { ButtonCounter } from './ButtonCounter';
 import { TweetImages } from './TweetImages';
 import { TweetInterface } from '../../../../../store/ducks/tweet';
 import { formatDateDifference } from '../../../../../helpers';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -116,6 +116,7 @@ export const TweetMini: React.FC<TweetProps> = ({
 	retweetsWithCommentCount,
 }): React.ReactElement => {
 	const classes = useStyles();
+	const history = useHistory();
 
 	const titleButton = (
 		<IconButton className={classes.moreIcon} color='primary'>
@@ -123,8 +124,16 @@ export const TweetMini: React.FC<TweetProps> = ({
 		</IconButton>
 	);
 
+	const handleContainerClick = () => {
+		history.push(`/${user.userName}/status/${id}`);
+	};
+
 	return (
-		<ContainerAvatar source={user.avatarUrl} className={classes.container}>
+		<ContainerAvatar
+			source={user.avatarUrl}
+			className={classes.container}
+			onClick={handleContainerClick}
+		>
 			<ContainerItemTitle
 				className={classes.header}
 				titleButton={() => titleButton}

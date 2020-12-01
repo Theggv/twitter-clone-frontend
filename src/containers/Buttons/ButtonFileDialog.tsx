@@ -15,12 +15,14 @@ interface ButtonFileDialogProps {
 	className?: string;
 	size?: number;
 	onClick?: () => void;
+	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const ButtonFileDialog: React.FC<ButtonFileDialogProps> = ({
 	className,
 	size = 30,
 	onClick,
+	onChange,
 }) => {
 	const classes = useStyles();
 
@@ -39,6 +41,7 @@ export const ButtonFileDialog: React.FC<ButtonFileDialogProps> = ({
 					multiple
 					id='button-upload-image'
 					type='file'
+					onChange={onChange}
 				></input>
 			</IconButton>
 		</div>

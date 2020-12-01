@@ -13,6 +13,10 @@ import { TopBlock } from './TopBlock';
 import { Route, Switch } from 'react-router-dom';
 import { TweetsList } from './Tweet/TweetsList';
 import { SearchButtons } from './TopBlock/SearchButtons';
+import { TweetFull } from './Tweet/TweetFull';
+import { Status } from './Status';
+import { useDispatch } from 'react-redux';
+import { fetchTweets } from '../../../../store/ducks/tweets';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -33,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	headerTitle: {
 		marginLeft: 10,
+		cursor: 'pointer',
 	},
 	headerButton: {
 		padding: '0 8px',
@@ -41,6 +46,18 @@ const useStyles = makeStyles((theme) => ({
 
 const ContentBlock: React.FC = (): React.ReactElement => {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const [shouldUpdateTweets, setShouldUpdateTweets] = React.useState(false);
+
+	React.useEffect(() => {
+		if (shouldUpdateTweets) {
+			dispatch(fetchTweets());
+			setShouldUpdateTweets((prev) => false);
+		}
+	}, [dispatch, shouldUpdateTweets]);
+
+	const updateTweets = () => setShouldUpdateTweets(true);
+	const scrollToTop = () => window.scroll(0, 0);
 
 	return (
 		<ContainerBase className={classes.root}>
@@ -49,7 +66,10 @@ const ContentBlock: React.FC = (): React.ReactElement => {
 					<TopBlock
 						title={
 							<div className={classes.header}>
-								<div className={classes.headerTitle}>
+								<div
+									className={classes.headerTitle}
+									onClick={updateTweets}
+								>
 									Главная
 								</div>
 								<ButtonWithIcon
@@ -62,6 +82,22 @@ const ContentBlock: React.FC = (): React.ReactElement => {
 					<CreatePost></CreatePost>
 					<ContentDivider></ContentDivider>
 					<TweetsList></TweetsList>
+				</Route>
+				<Route path='/:userName/status/:tweetId'>
+					<TopBlock
+						showBackButton
+						title={
+							<div className={classes.header}>
+								<div
+									className={classes.headerTitle}
+									onClick={scrollToTop}
+								>
+									Твитнуть
+								</div>
+							</div>
+						}
+					></TopBlock>
+					<Status></Status>
 				</Route>
 				<Route path='/search'>
 					<TopBlock

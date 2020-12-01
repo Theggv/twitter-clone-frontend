@@ -13,7 +13,7 @@ export interface ButtonWithIconProps {
 	className?: string;
 	size?: number;
 	icon: React.ReactNode;
-	onClick?: () => void;
+	onClick?: (e: any) => void;
 	style?: React.CSSProperties;
 }
 
@@ -32,7 +32,7 @@ export const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
 			<IconButton
 				style={{ width: size, height: size, ...style }}
 				color='primary'
-				onClick={() => onClick && onClick()}
+				onClick={(e) => onClick && onClick(e)}
 			>
 				{icon}
 			</IconButton>

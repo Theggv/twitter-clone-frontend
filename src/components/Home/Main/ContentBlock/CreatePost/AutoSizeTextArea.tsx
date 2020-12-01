@@ -94,6 +94,7 @@ interface AutoResizableInputProps {
 }
 
 const AutoSizeTextArea: React.FC<AutoResizableInputProps> = ({
+	children,
 	minRows = 1,
 	maxRows = 15,
 	onChange,
@@ -101,6 +102,10 @@ const AutoSizeTextArea: React.FC<AutoResizableInputProps> = ({
 	const classes = useStyles();
 	const [isUsed, setUsed] = useState(false);
 	const input = useInput('', minRows, maxRows);
+
+	React.useEffect(() => {
+		if (children && !isUsed) setUsed(true);
+	}, [children, isUsed]);
 
 	return (
 		<div className={classes.root}>
@@ -114,6 +119,7 @@ const AutoSizeTextArea: React.FC<AutoResizableInputProps> = ({
 				placeholder={'Что происходит?'}
 				onFocusCapture={() => setUsed(true)}
 			/>
+			{children}
 			{isUsed ? (
 				<div className={classes.underInfo}>
 					<IconButton color='primary' className={classes.button}>

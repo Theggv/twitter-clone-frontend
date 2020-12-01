@@ -27,6 +27,7 @@ export const ContainerAvatar: React.FC<ContainerAvatarProps> = ({
 	hoverType = 'default',
 	size = 'default',
 	noBorder = false,
+	onClick,
 }): React.ReactElement => {
 	const classes = useStyles();
 
@@ -35,6 +36,7 @@ export const ContainerAvatar: React.FC<ContainerAvatarProps> = ({
 			hoverType={hoverType}
 			noBorder={noBorder}
 			className={classes.root}
+			onClick={onClick}
 		>
 			<div className={classes.left}>
 				<Avatar size={size} source={source} />

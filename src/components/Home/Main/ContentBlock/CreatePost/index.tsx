@@ -1,10 +1,7 @@
 import { Button, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import React, { useState } from 'react';
-import clsx from 'clsx';
 
 import AutoSizeTextArea from './AutoSizeTextArea';
-
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import GifIcon from '../../../../../containers/Icons/GifIcon';
 import PollIcon from '@material-ui/icons/PollOutlined';
@@ -15,6 +12,8 @@ import {
 	ButtonFileDialog,
 	ButtonWithIcon,
 } from '../../../../../containers/Buttons';
+import { LengthCounter } from './LengthCounter';
+import { TweetImages } from '../Tweet/TweetImages';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 	inputArea: {
 		flex: '1',
 		display: 'flex',
-		justifyContent: 'flex-start',
+		flexDirection: 'column',
 	},
 	bottomArea: {
 		display: 'flex',
@@ -48,65 +47,12 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 		paddingRight: 3,
 	},
-	textLengthCounter: {
-		position: 'relative',
-	},
-	circularStatic: {
-		'& svg': {
-			color: 'rgba(128,128,128,0.15)',
-		},
-	},
-	circularActive: {
-		position: 'absolute',
-		top: 0,
-		left: 0,
-
-		transitionDuration: '0.1s',
-
-		'& svg': {
-			color: theme.palette.primary.main,
-		},
-
-		'& circle': {
-			transition:
-				'stroke-dashoffset 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-		},
-	},
-	circularYellow: {
-		'& svg': {
-			color: 'orange',
-		},
-	},
-	circularRed: {
-		'& svg': {
-			color: 'red',
-		},
-	},
-	circularBig: {
-		marginRight: -5,
-	},
-	circularText: {
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		width: 30,
-		height: 30,
-
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		textAlign: 'center',
-		fontSize: 11,
-
-		color: theme.palette.text.secondary,
-	},
-	circularTextRed: {
-		color: 'red',
-	},
-	textLengthDivider: {
-		margin: '0 15px',
-		padding: '15px 0',
-		borderRight: `1px solid rgba(128,128,128,0.15)`,
+	media: {
+		marginTop: 10,
+		padding: 0,
+		borderRadius: 16,
+		border: '1px solid rgba(128, 128, 128, 0.15)',
+		overflow: 'hidden',
 	},
 }));
 
@@ -131,51 +77,18 @@ const CreatePost: React.FC<CreatePostProps> = ({
 	const matches = useMediaQuery(theme.breakpoints.up(705));
 
 	const [inputValue, setInputValue] = useState('');
+	const [media, setMedia] = useState<Array<any>>([]);
 
-	const lengthRatio = (inputValue.length / MAX_LENGTH) * 100;
 	const leftSymbols = MAX_LENGTH - inputValue.length;
-	const circularSize = leftSymbols >= 20 ? 20 : 30;
-
 	const isSubmitButtonDisable = !inputValue.length || leftSymbols < 0;
 
-	const inputFieldLengthCounter = (
-		<>
-			<div className={classes.textLengthCounter}>
-				<CircularProgress
-					className={clsx(
-						classes.circularStatic,
-						leftSymbols < 20 && classes.circularBig
-					)}
-					variant='static'
-					value={100}
-					size={circularSize}
-				></CircularProgress>
-				<CircularProgress
-					className={clsx(classes.circularActive, [
-						leftSymbols < 20 && classes.circularBig,
-						leftSymbols <= 0 && classes.circularRed,
-						leftSymbols > 0 &&
-							leftSymbols < 20 &&
-							classes.circularYellow,
-					])}
-					variant='static'
-					value={lengthRatio < 100 ? lengthRatio : 100}
-					size={circularSize}
-				></CircularProgress>
-				{leftSymbols < 20 && (
-					<div
-						className={clsx(
-							classes.circularText,
-							leftSymbols <= 0 && classes.circularTextRed
-						)}
-					>
-						<span>{leftSymbols}</span>
-					</div>
-				)}
-			</div>
-			<div className={classes.textLengthDivider}></div>
-		</>
-	);
+	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setMedia((prev) => {
+			if (event.target && event.target.files)
+				return [...prev, URL.createObjectURL(event.target.files[0])];
+			return prev;
+		});
+	};
 
 	return (
 		<ContainerAvatar
@@ -190,11 +103,20 @@ const CreatePost: React.FC<CreatePostProps> = ({
 					onChange={(text) => {
 						setInputValue(text);
 					}}
-				></AutoSizeTextArea>
+				>
+					{media && media.length ? (
+						<div className={classes.media}>
+							<TweetImages media={media}></TweetImages>
+						</div>
+					) : null}
+				</AutoSizeTextArea>
 			</div>
 			<div className={classes.bottomArea}>
 				<div className={classes.buttonsArea}>
-					<ButtonFileDialog size={16}></ButtonFileDialog>
+					<ButtonFileDialog
+						onChange={handleFileUpload}
+						size={16}
+					></ButtonFileDialog>
 					<ButtonWithIcon
 						size={40}
 						icon={<GifIcon style={{ fontSize: 19 }} />}
@@ -208,7 +130,12 @@ const CreatePost: React.FC<CreatePostProps> = ({
 					)}
 				</div>
 				<div className={classes.addTweetArea}>
-					{inputValue && inputFieldLengthCounter}
+					{inputValue && (
+						<LengthCounter
+							input={inputValue}
+							maxLength={MAX_LENGTH}
+						/>
+					)}
 					<Button
 						variant='contained'
 						color='primary'

@@ -2,7 +2,7 @@ import { RootState } from '../../store';
 import { createSelector } from 'reselect';
 import { LoadingState, TweetsState } from './types';
 
-export const selectTweets = (state: RootState): TweetsState => state.tweets;
+export const selectTweets = (state: RootState): TweetsState => state.tweetsList;
 
 export const selectTweetsItems = createSelector(
 	selectTweets,

@@ -17,6 +17,6 @@ function* fetchTweetsRequestAsync() {
 	}
 }
 
-export function* tweetsSaga() {
+export function* tweetsListSaga() {
 	yield takeEvery(TweetsActionsType.FETCH_TWEETS, fetchTweetsRequestAsync);
 }

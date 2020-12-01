@@ -6,6 +6,7 @@ import theme from '../../../../../theme';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
+		zIndex: 200,
 		fontSize: 15,
 		color: 'rgb(91, 112, 131)',
 
@@ -49,7 +50,7 @@ interface ButtonCounterProps {
 	icon: React.ReactNode;
 	text?: string | number;
 	className?: string;
-	onClick?: () => void;
+	onClick?: (e: any) => void;
 	hoverProps?: {
 		color: string;
 		backgroundColor?: string;
@@ -84,7 +85,7 @@ export const ButtonCounter: React.FC<ButtonCounterProps> = ({
 				type === 'big' && classes.big,
 				className
 			)}
-			onClick={onClick}
+			onClick={(e) => onClick && onClick(e)}
 			style={color}
 			size={type === 'default' ? 30 : 40}
 		>

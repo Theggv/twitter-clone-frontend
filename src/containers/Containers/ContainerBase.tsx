@@ -3,7 +3,9 @@ import clsx from 'clsx';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
-	root: {},
+	root: {
+		zIndex: 100,
+	},
 	border: {
 		borderBottom: '1px solid rgba(128, 128, 128, 0.15)',
 	},
@@ -12,12 +14,14 @@ const useStyles = makeStyles((theme) => ({
 export interface ContainerBaseProps {
 	className?: string;
 	noBorder?: boolean;
+	onClick?: () => void;
 }
 
 export const ContainerBase: React.FC<ContainerBaseProps> = ({
 	children,
 	className,
 	noBorder = false,
+	onClick,
 }): React.ReactElement => {
 	const classes = useStyles();
 
@@ -28,6 +32,7 @@ export const ContainerBase: React.FC<ContainerBaseProps> = ({
 				!noBorder && classes.border,
 				className
 			)}
+			onClick={onClick}
 		>
 			{children}
 		</div>

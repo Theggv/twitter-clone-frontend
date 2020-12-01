@@ -1,19 +1,16 @@
 import { RootState } from '../../store';
-import { createSelector } from 'reselect';
 import { LoadingState, TweetState } from './types';
 
-export const selectTweet = (state: RootState): TweetState => state.tweets;
+export const selectTweet = (state: RootState): TweetState => state.tweet;
 
-// export const selectTweetsItems = createSelector(
-// 	selectTweets,
-// 	(tweets) => tweets.items
-// );
+export const selectTweetContent = (state: RootState) =>
+	selectTweet(state).tweet;
 
-// export const selectLoadingState = (state: RootState) =>
-// 	selectTweets(state).loadingState;
+export const selectLoadingState = (state: RootState) =>
+	selectTweet(state).loadingState;
 
-// export const selectIsTweetsLoading = (state: RootState) =>
-// 	selectLoadingState(state) === LoadingState.LOADING;
+export const selectIsTweetLoading = (state: RootState) =>
+	selectLoadingState(state) === LoadingState.LOADING;
 
-// export const selectIsTweetsLoaded = (state: RootState) =>
-// 	selectLoadingState(state) === LoadingState.LOADED;
+export const selectIsTweetLoaded = (state: RootState) =>
+	selectLoadingState(state) === LoadingState.LOADED;

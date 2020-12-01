@@ -2,11 +2,11 @@ import { RootState } from '../../store';
 import { createSelector } from 'reselect';
 import { LoadingState, TopicsState } from './types';
 
-const selectTopics = (state: RootState): TopicsState => state.tweets;
+const selectTopics = (state: RootState): TopicsState => state.topics;
 
 export const selectTopicsItems = createSelector(
 	selectTopics,
-	(tweets) => tweets.topics
+	(topics) => topics.topics
 );
 
 export const selectLoadingState = (state: RootState) =>

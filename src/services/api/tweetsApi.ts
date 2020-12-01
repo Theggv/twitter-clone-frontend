@@ -12,8 +12,7 @@ const fetchTweet = async (
 	id: TweetInterface['id']
 ): Promise<TweetState['tweet']> => {
 	const resp = await axios.get(`http://localhost:3001/api/tweets?id=${id}`);
-
-	return resp.data;
+	return resp.data[0];
 };
 
 export const TweetsApi = {
