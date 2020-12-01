@@ -22,6 +22,7 @@ import {
 import { LoaderCircular } from '../../../containers/Loaders';
 import { HeaderButton } from '../../../containers/Buttons/Header/HeaderButton';
 import { ButtonWithIcon } from '../../../containers/Buttons';
+import { ButtonWithIconLink } from '../../../containers/Buttons/ButtonWithIconLink';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -135,10 +136,13 @@ const Header: React.FC = (): React.ReactElement | null => {
 
 	return (
 		<Wrapper>
-			<ButtonWithIcon
-				className={classes.twitterIcon}
-				size={49}
-				icon={<TwitterIcon />}
+			<ButtonWithIconLink
+				to='/'
+				buttonProps={{
+					className: classes.twitterIcon,
+					size: 49,
+					icon: <TwitterIcon />,
+				}}
 			/>
 			{isAuth ? (
 				<div className={classes.buttonsContainer}>

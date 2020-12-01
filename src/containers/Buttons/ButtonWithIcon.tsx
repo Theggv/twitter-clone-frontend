@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-interface ButtonWithIconProps {
+export interface ButtonWithIconProps {
 	className?: string;
 	size?: number;
 	icon: React.ReactNode;

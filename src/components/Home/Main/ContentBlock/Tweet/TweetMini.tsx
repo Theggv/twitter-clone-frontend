@@ -16,6 +16,7 @@ import { ButtonCounter } from './ButtonCounter';
 import { TweetImages } from './TweetImages';
 import { TweetInterface } from '../../../../../store/ducks/tweet';
 import { formatDateDifference } from '../../../../../helpers';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -90,11 +91,21 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		justifyContent: 'space-between',
 	},
+	link: {
+		color: 'inherit',
+		border: 'none',
+		textDecoration: 'none',
+
+		'&:hover': {
+			textDecoration: 'underline',
+		},
+	},
 }));
 
 export interface TweetProps extends TweetInterface {}
 
 export const TweetMini: React.FC<TweetProps> = ({
+	id,
 	createdAtUTC,
 	user,
 	text,
@@ -128,7 +139,14 @@ export const TweetMini: React.FC<TweetProps> = ({
 					)}
 				</div>
 				<div className={classes.headerUrl}>
-					{`@${user?.userName} · ${formatDateDifference(createdAtUTC)}`}
+					<span>@{user?.userName}</span>
+					&nbsp;·&nbsp;
+					<Link
+						className={classes.link}
+						to={`/${user.userName}/status/${id}`}
+					>
+						<span>{formatDateDifference(createdAtUTC)}</span>
+					</Link>
 				</div>
 			</ContainerItemTitle>
 			<div className={classes.contentBlock}>{text}</div>

@@ -1,4 +1,3 @@
-import { UserInterface } from '../recommendations';
 import { TweetInterface } from '../tweet';
 
 export enum LoadingState {

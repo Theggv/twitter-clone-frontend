@@ -16,7 +16,7 @@ import OptionsIcon from '@material-ui/icons/KeyboardArrowUp';
 import { TweetProps } from './TweetMini';
 import { ButtonCounter } from './ButtonCounter';
 import { TweetImages } from './TweetImages';
-import { cutNumber2 } from '../../../../../helpers';
+import { cutNumber2, formatDateFull } from '../../../../../helpers';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
@@ -169,8 +169,7 @@ export const TweetFull: React.FC<TweetProps> = ({
 					className={classes.moreInfoBlock}
 					hoverType='disabled'
 				>
-					{new Date(createdAtUTC).toLocaleTimeString()} ·{' '}
-					{new Date(createdAtUTC).toLocaleDateString()}·Twitter
+                    {formatDateFull(createdAtUTC)} · Twitter
 				</ContainerItem>
 				{(retweetsCount || retweetsWithCommentCount || likesCount) && (
 					<ContainerItem

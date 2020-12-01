@@ -55,4 +55,40 @@ export const formatDateDifference = (dateStr: string) => {
 	return formated;
 };
 
+export const formatDateFull = (dateStr: string) => {
+	let date = new Date(dateStr);
+
+	const getFullMinutes = () => {
+		let min = date.getMinutes();
+		return min < 10 ? '0' + min : min;
+	};
+
+	return (
+		`${
+			date.getHours() <= 12
+				? `${date.getHours()}:${getFullMinutes()} AM`
+				: `${date.getHours() - 12}:${getFullMinutes()} PM`
+		} · ` +
+		date.getDate() +
+		' ' +
+		[
+			'янв.',
+			'фев.',
+			'мар.',
+			'апр.',
+			'мая',
+			'июня',
+			'июля',
+			'авг.',
+			'сент.',
+			'окт.',
+			'нояб.',
+			'дек.',
+		][date.getMonth()] +
+		' ' +
+		date.getFullYear() +
+		' г.'
+	);
+};
+
 export const generateNum = (max: number) => Math.round(Math.random() * max);
