@@ -8,7 +8,7 @@ export function* getRecommendedUsers() {
 	try {
 		const data = yield call(UsersApi.fetchRecommended);
 
-		console.log(data);
+		// console.log(data);
 
 		yield put(setRecommended(data));
 	} catch (error) {

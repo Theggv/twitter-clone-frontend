@@ -23,9 +23,7 @@ export const Status: React.FC = () => {
 	const isLoaded = useSelector(selectIsTweetLoaded);
 
 	React.useEffect(() => {
-		if (tweet?.id !== tweetId && !isLoading) {
-			dispatch(fetchTweet(tweetId));
-		}
+		if (tweet?.id !== tweetId && !isLoading) dispatch(fetchTweet(tweetId));
 
 		window.scroll(0, 0);
 	}, [dispatch, tweetId, tweet, isLoading]);

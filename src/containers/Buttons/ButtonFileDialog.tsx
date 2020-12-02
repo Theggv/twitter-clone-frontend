@@ -16,6 +16,7 @@ interface ButtonFileDialogProps {
 	size?: number;
 	onClick?: () => void;
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	disabled?: boolean;
 }
 
 export const ButtonFileDialog: React.FC<ButtonFileDialogProps> = ({
@@ -23,12 +24,14 @@ export const ButtonFileDialog: React.FC<ButtonFileDialogProps> = ({
 	size = 30,
 	onClick,
 	onChange,
+	disabled = false,
 }) => {
 	const classes = useStyles();
 
 	return (
 		<div className={clsx(classes.root, className)}>
 			<IconButton
+				disabled={disabled}
 				component='label'
 				style={{ width: size, height: size }}
 				color='primary'

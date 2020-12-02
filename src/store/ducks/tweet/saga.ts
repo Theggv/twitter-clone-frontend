@@ -9,7 +9,7 @@ function* fetchTweetRequest(action: FetchTweetActionInterface) {
 	try {
 		const data = yield call(TweetsApi.fetchTweet, action.payload);
 
-		console.log(data);
+		// console.log(data);
 
 		yield put(setTweet(data));
 	} catch (error) {

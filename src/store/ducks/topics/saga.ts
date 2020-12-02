@@ -7,7 +7,7 @@ import { LoadingState } from './types';
 function* fetchTopicsRequest() {
 	try {
 		const data = yield call(TweetsApi.fetchTweets);
-		console.log(data);
+		// console.log(data);
 		yield put(setTopics(data));
 	} catch (error) {
 		yield put(setTopicsLoadingState(LoadingState.ERROR));

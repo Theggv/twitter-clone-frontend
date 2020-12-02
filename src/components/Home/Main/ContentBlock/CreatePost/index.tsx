@@ -14,6 +14,7 @@ import {
 } from '../../../../../containers/Buttons';
 import { LengthCounter } from './LengthCounter';
 import { MediaContainer, MediaElement } from '../MediaContainer';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface CreatePostProps {
+	className?: string;
 	author?: {
 		avatar: string;
 	};
@@ -71,6 +73,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
 			'https://abs.twimg.com/sticky/default_profile_images/default_profile_bigger.png',
 	},
 	minRows = 1,
+	className,
 }): React.ReactElement => {
 	const classes = useStyles();
 	const theme = useTheme();
@@ -101,12 +104,24 @@ const CreatePost: React.FC<CreatePostProps> = ({
 		setMedia((prev) => prev.filter((x) => x.path !== src));
 	};
 
+	const canUploadFiles = React.useMemo(() => {
+		if (
+			media.find((x) => x.type.includes('video')) ||
+			media.find((x) => x.type === 'image/gif') ||
+			media.length >= 4
+		)
+			return false;
+
+		return true;
+	}, [media]);
+
 	const buttonsArea = React.useMemo(
 		() => (
 			<div className={classes.buttonsArea}>
 				<ButtonFileDialog
 					onChange={handleFileUpload}
 					size={16}
+					disabled={!canUploadFiles}
 				></ButtonFileDialog>
 				<ButtonWithIcon
 					size={40}
@@ -119,7 +134,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
 				)}
 			</div>
 		),
-		[classes.buttonsArea, matches]
+		[classes.buttonsArea, matches, canUploadFiles]
 	);
 
 	return (
@@ -128,7 +143,7 @@ const CreatePost: React.FC<CreatePostProps> = ({
 			source={author.avatar}
 			className={classes.root}
 		>
-			<div className={classes.inputArea}>
+			<div className={clsx(classes.inputArea, className)}>
 				<AutoSizeTextArea
 					maxSymbols={280}
 					minRows={minRows}

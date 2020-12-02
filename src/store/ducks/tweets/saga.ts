@@ -8,8 +8,8 @@ import { LoadingState } from './types';
 function* fetchTweetsRequestAsync() {
 	try {
 		const data = yield call(TweetsApi.fetchTweets);
-		
-		console.log(data);
+
+		// console.log(data);
 
 		yield put(setTweets(data));
 	} catch (error) {

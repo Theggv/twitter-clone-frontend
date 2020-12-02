@@ -6,6 +6,8 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		borderRadius: '100%',
 
+		cursor: 'pointer',
+
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
