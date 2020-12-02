@@ -17,17 +17,21 @@ export const Status: React.FC = () => {
 	}>();
 
 	const dispatch = useDispatch();
-	const isLoading = useSelector(selectIsTweetLoading);
-	const isLoaded = useSelector(selectIsTweetLoaded);
 	const tweet = useSelector(selectTweetContent);
 
+	const isLoading = useSelector(selectIsTweetLoading);
+	const isLoaded = useSelector(selectIsTweetLoaded);
+
 	React.useEffect(() => {
-		dispatch(fetchTweet(tweetId));
+		if (tweet?.id !== tweetId && !isLoading) {
+			dispatch(fetchTweet(tweetId));
+		}
+
 		window.scroll(0, 0);
-	}, [dispatch, tweetId]);
+	}, [dispatch, tweetId, tweet, isLoading]);
 
 	if (isLoading) return <LoaderCircular />;
-	if (!isLoaded || !tweet) return null;
+	if (!isLoaded || !tweet || tweet?.id !== tweetId) return null;
 
 	return <TweetFull {...tweet}></TweetFull>;
 };

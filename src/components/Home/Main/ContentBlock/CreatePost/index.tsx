@@ -13,7 +13,7 @@ import {
 	ButtonWithIcon,
 } from '../../../../../containers/Buttons';
 import { LengthCounter } from './LengthCounter';
-import { TweetImages } from '../Tweet/TweetImages';
+import { MediaContainer, MediaElement } from '../MediaContainer';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -74,21 +74,53 @@ const CreatePost: React.FC<CreatePostProps> = ({
 }): React.ReactElement => {
 	const classes = useStyles();
 	const theme = useTheme();
-	const matches = useMediaQuery(theme.breakpoints.up(705));
+	const matches = useMediaQuery(theme.breakpoints.up(705), { noSsr: true });
 
 	const [inputValue, setInputValue] = useState('');
-	const [media, setMedia] = useState<Array<any>>([]);
+	const [media, setMedia] = useState<MediaElement[]>([]);
 
 	const leftSymbols = MAX_LENGTH - inputValue.length;
 	const isSubmitButtonDisable = !inputValue.length || leftSymbols < 0;
 
 	const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setMedia((prev) => {
-			if (event.target && event.target.files)
-				return [...prev, URL.createObjectURL(event.target.files[0])];
-			return prev;
-		});
+		if (!event.target || !event.target.files) return;
+		let files = event.target.files;
+
+		let arr: MediaElement[] = [];
+		for (let i = 0; i < files.length; ++i) {
+			arr.push({
+				path: URL.createObjectURL(files[i]),
+				type: files[i].type,
+			});
+		}
+
+		setMedia((prev) => [...prev, ...arr]);
 	};
+
+	const handleRemove = (src: string) => {
+		setMedia((prev) => prev.filter((x) => x.path !== src));
+	};
+
+	const buttonsArea = React.useMemo(
+		() => (
+			<div className={classes.buttonsArea}>
+				<ButtonFileDialog
+					onChange={handleFileUpload}
+					size={16}
+				></ButtonFileDialog>
+				<ButtonWithIcon
+					size={40}
+					icon={<GifIcon style={{ fontSize: 19 }} />}
+				/>
+				{matches && <ButtonWithIcon size={40} icon={<PollIcon />} />}
+				<ButtonWithIcon size={40} icon={<EmojiIcon />} />
+				{matches && (
+					<ButtonWithIcon size={40} icon={<ScheduleIcon />} />
+				)}
+			</div>
+		),
+		[classes.buttonsArea, matches]
+	);
 
 	return (
 		<ContainerAvatar
@@ -106,29 +138,17 @@ const CreatePost: React.FC<CreatePostProps> = ({
 				>
 					{media && media.length ? (
 						<div className={classes.media}>
-							<TweetImages media={media}></TweetImages>
+							<MediaContainer
+								media={media}
+								editable
+								onRemove={handleRemove}
+							/>
 						</div>
 					) : null}
 				</AutoSizeTextArea>
 			</div>
 			<div className={classes.bottomArea}>
-				<div className={classes.buttonsArea}>
-					<ButtonFileDialog
-						onChange={handleFileUpload}
-						size={16}
-					></ButtonFileDialog>
-					<ButtonWithIcon
-						size={40}
-						icon={<GifIcon style={{ fontSize: 19 }} />}
-					/>
-					{matches && (
-						<ButtonWithIcon size={40} icon={<PollIcon />} />
-					)}
-					<ButtonWithIcon size={40} icon={<EmojiIcon />} />
-					{matches && (
-						<ButtonWithIcon size={40} icon={<ScheduleIcon />} />
-					)}
-				</div>
+				{buttonsArea}
 				<div className={classes.addTweetArea}>
 					{inputValue && (
 						<LengthCounter

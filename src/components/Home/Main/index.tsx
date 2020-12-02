@@ -1,15 +1,5 @@
-import { makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { LoaderCircular } from '../../../containers/Loaders';
-import {
-	LoadingState,
-	selectHeaderLoaded,
-	selectMainLoading,
-	setMainLoadingState,
-} from '../../../store/ducks/loading';
-import ContentBlock from './ContentBlock';
-import SideBar from './Sidebar';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -32,35 +22,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Main: React.FC = () => {
-	const theme = useTheme();
+const Main: React.FC = ({ children }) => {
 	const classes = useStyles();
-	const matches = useMediaQuery(theme.breakpoints.up(1005));
 
-	const dispatch = useDispatch();
-	const isHeaderLoaded = useSelector(selectHeaderLoaded);
-	const isLoading = useSelector(selectMainLoading);
-
-	React.useEffect(() => {
-		dispatch(setMainLoadingState(LoadingState.LOADED));
-
-		return () => {
-			dispatch(setMainLoadingState(LoadingState.NEVER));
-		};
-	}, [dispatch]);
-
-	return (
-		<main className={classes.root}>
-			{isHeaderLoaded && !isLoading ? (
-				<React.Fragment>
-					<ContentBlock></ContentBlock>
-					{matches ? <SideBar></SideBar> : null}
-				</React.Fragment>
-			) : (
-				<LoaderCircular />
-			)}
-		</main>
-	);
+	return <main className={classes.root}>{children}</main>;
 };
 
 export default Main;

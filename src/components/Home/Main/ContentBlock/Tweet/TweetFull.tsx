@@ -15,9 +15,9 @@ import OptionsIcon from '@material-ui/icons/KeyboardArrowUp';
 
 import { TweetProps } from './TweetMini';
 import { ButtonCounter } from './ButtonCounter';
-import { TweetImages } from './TweetImages';
 import { cutNumber2, formatDateFull } from '../../../../../helpers';
 import clsx from 'clsx';
+import { MediaContainer } from '../MediaContainer';
 
 const useStyles = makeStyles((theme) => ({
 	header: {
@@ -109,9 +109,20 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		justifyContent: 'space-between',
 	},
+	link: {
+		color: 'inherit',
+		border: 'none',
+		textDecoration: 'none',
+		cursor: 'pointer',
+
+		'&:hover': {
+			textDecoration: 'underline',
+		},
+	},
 }));
 
 export const TweetFull: React.FC<TweetProps> = ({
+	id,
 	createdAtUTC,
 	user,
 	text,
@@ -155,21 +166,19 @@ export const TweetFull: React.FC<TweetProps> = ({
 			</ContainerAvatar>
 			<ContainerItem hoverType='disabled' className={classes.main}>
 				<div className={classes.textBlock}>{text}</div>
-				<div className={classes.mediaBlock}>
-					<TweetImages
-						media={[
-							'https://pbs.twimg.com/media/EoAUQ46XcAAxU77?format=jpg&name=large',
-							'https://pbs.twimg.com/media/EoAUQ47W8AQwi9B?format=jpg&name=large',
-							'https://pbs.twimg.com/media/EoAUQ47XcAEkYrZ?format=jpg&name=small',
-							'https://pbs.twimg.com/media/EoAUQ48W4AgNEit?format=jpg&name=large',
-						]}
-					></TweetImages>
-				</div>
+				{attachments && attachments.length ? (
+					<div className={classes.mediaBlock}>
+						<MediaContainer></MediaContainer>
+					</div>
+				) : null}
 				<ContainerItem
 					className={classes.moreInfoBlock}
 					hoverType='disabled'
 				>
-                    {formatDateFull(createdAtUTC)} · Twitter
+					<span className={classes.link}>
+						{formatDateFull(createdAtUTC)}
+					</span>
+					{' · Twitter'}
 				</ContainerItem>
 				{(retweetsCount || retweetsWithCommentCount || likesCount) && (
 					<ContainerItem

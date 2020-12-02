@@ -51,8 +51,7 @@ export const TopBlock: React.FC<TopBlockProps> = ({
 	const history = useHistory();
 
 	const handleClickBack = () => {
-		console.log(history);
-		if (history.length <= 2) history.push('/');
+		if (history.length <= 2) history.push('/home');
 		else history.goBack();
 	};
 

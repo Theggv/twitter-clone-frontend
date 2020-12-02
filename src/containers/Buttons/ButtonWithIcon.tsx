@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export interface ButtonWithIconProps {
+	children?: React.ReactNode;
 	className?: string;
 	size?: number;
 	icon: React.ReactNode;
@@ -17,14 +18,9 @@ export interface ButtonWithIconProps {
 	style?: React.CSSProperties;
 }
 
-export const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
-	children,
-	className,
-	size = 30,
-	icon,
-	onClick,
-	style,
-}) => {
+export const ButtonWithIcon: React.FC<ButtonWithIconProps> = (props) => {
+	const { children, className, size = 30, icon, onClick, style } = props;
+
 	const classes = useStyles();
 
 	return (

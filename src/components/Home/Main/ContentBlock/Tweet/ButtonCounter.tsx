@@ -6,7 +6,9 @@ import theme from '../../../../../theme';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		zIndex: 200,
+		cursor: 'pointer',
+	},
+	button: {
 		fontSize: 15,
 		color: 'rgb(91, 112, 131)',
 
@@ -43,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 	text: {
 		padding: '0 4px',
 		fontSize: 13,
+		userSelect: 'none',
 	},
 }));
 
@@ -76,24 +79,31 @@ export const ButtonCounter: React.FC<ButtonCounterProps> = ({
 		'--background-color': hoverProps.backgroundColor,
 	} as React.CSSProperties;
 
+	const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		e.preventDefault();
+	};
+
 	return (
-		<ButtonWithIcon
-			icon={icon}
-			className={clsx(
-				classes.root,
-				type === 'default' && classes.default,
-				type === 'big' && classes.big,
-				className
-			)}
-			onClick={(e) => onClick && onClick(e)}
-			style={color}
-			size={type === 'default' ? 30 : 40}
-		>
-			{text ? (
-				<div id='text' className={clsx(classes.text)} style={color}>
-					{text}
-				</div>
-			) : null}
-		</ButtonWithIcon>
+		<div className={classes.root} onClick={(e) => handleClick(e)}>
+			<ButtonWithIcon
+				icon={icon}
+				className={clsx(
+					classes.button,
+					type === 'default' && classes.default,
+					type === 'big' && classes.big,
+					className
+				)}
+				style={color}
+				size={type === 'default' ? 30 : 40}
+				onClick={(e) => onClick && onClick(e)}
+			>
+				{text ? (
+					<div id='text' className={clsx(classes.text)} style={color}>
+						{text}
+					</div>
+				) : null}
+			</ButtonWithIcon>
+		</div>
 	);
 };

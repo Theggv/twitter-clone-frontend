@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	underInfo: {
 		marginBottom: 10,
-		borderBottom: '1px solid rgba(128,128,128,0.15)',
+		borderBottom: '1px solid rgb(235, 238, 240)',
 	},
 }));
 

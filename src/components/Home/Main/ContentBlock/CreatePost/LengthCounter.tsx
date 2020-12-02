@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	circularStatic: {
 		'& svg': {
-			color: 'rgba(128,128,128,0.15)',
+			color: 'rgb(235, 238, 240)',
 		},
 	},
 	circularActive: {
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 	textLengthDivider: {
 		margin: '0 15px',
 		padding: '15px 0',
-		borderRight: `1px solid rgba(128,128,128,0.15)`,
+		borderRight: `1px solid rgb(235, 238, 240)`,
 	},
 }));
 

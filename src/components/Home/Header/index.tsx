@@ -20,8 +20,9 @@ import {
 	setHeaderLoadingState,
 } from '../../../store/ducks/loading';
 import { LoaderCircular } from '../../../containers/Loaders';
-import { HeaderButton } from '../../../containers/Buttons/Header/HeaderButton';
+import { HeaderButton, HeaderLink } from '../../../containers/Buttons/Header';
 import { ButtonWithIconLink } from '../../../containers/Buttons/ButtonWithIconLink';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 		position: 'sticky',
 		top: 0,
 
-		borderRight: '1px solid rgba(128,128,128,0.15)',
+		borderRight: '1px solid rgb(235, 238, 240)',
 	},
 	menuWrapper: {
 		[theme.breakpoints.down('sm')]: {
@@ -105,8 +106,7 @@ const Header: React.FC = (): React.ReactElement | null => {
 	const classes = useStyles();
 	const matches = useMediaQuery(theme.breakpoints.up('lg'));
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [selection, setSelection] = useState('Главная');
+	const location = useLocation();
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [isAuth, setAuth] = useState(true);
 
@@ -136,7 +136,7 @@ const Header: React.FC = (): React.ReactElement | null => {
 	return (
 		<Wrapper>
 			<ButtonWithIconLink
-				to='/'
+				to='/home'
 				buttonProps={{
 					className: classes.twitterIcon,
 					size: 49,
@@ -145,15 +145,19 @@ const Header: React.FC = (): React.ReactElement | null => {
 			/>
 			{isAuth ? (
 				<div className={classes.buttonsContainer}>
-					<HeaderButton
+					<HeaderLink
 						icon={<HomeIcon />}
 						text='Главная'
 						showText={matches}
+						to='/home'
+						selected={location.pathname === '/home'}
 					/>
-					<HeaderButton
+					<HeaderLink
 						icon={<HashtagIcon />}
 						text='Поиск'
 						showText={matches}
+						to='/search'
+						selected={location.pathname.slice(0, 7) === '/search'}
 					/>
 					<HeaderButton
 						icon={<NotificationsIcon />}
@@ -178,10 +182,11 @@ const Header: React.FC = (): React.ReactElement | null => {
 				</div>
 			) : (
 				<div className={classes.buttonsContainer}>
-					<HeaderButton
+					<HeaderLink
 						icon={<HashtagIcon />}
 						text='Поиск'
 						showText={matches}
+						to='/search'
 					/>
 					<HeaderButton
 						icon={<SettingsIcon />}

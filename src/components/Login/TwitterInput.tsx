@@ -77,8 +77,6 @@ const TwitterInput: React.FC<TextFieldProps & TwitterInputProps> = (props) => {
 		if (input.isUsed) input.clear();
 	}, [input, props.title]);
 
-	console.log(props.title);
-
 	const hasError = input.isUsed && validationText !== undefined;
 
 	const helperText = (

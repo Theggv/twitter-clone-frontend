@@ -3,15 +3,21 @@ import React from 'react';
 
 import Author from './Author';
 
-import { UserInterface } from '../../../../../../store/ducks/recommendations';
+import {
+	fetchRecommended,
+	LoadingState,
+	selectRecommendationsItems,
+	selectRecommendionsLoadingState,
+} from '../../../../../../store/ducks/recommendations';
 import {
 	ContainerItem,
 	ContainerSidebar,
 } from '../../../../../../containers/Containers';
 import { LoaderCircular } from '../../../../../../containers/Loaders';
+import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
-	noRecommendations: {
+	notFound: {
 		textAlign: 'left',
 		color: theme.palette.text.secondary,
 	},
@@ -19,29 +25,46 @@ const useStyles = makeStyles((theme) => ({
 
 interface AuthorRecomendationsProps {
 	title: string;
-	recomendations?: UserInterface[];
-	isLoading?: boolean;
 }
 
 const AuthorRecomendations: React.FC<AuthorRecomendationsProps> = ({
 	title,
-	recomendations,
-	isLoading = false,
-}): React.ReactElement => {
+}): React.ReactElement | null => {
 	const classes = useStyles();
 
-	return (
-		<ContainerSidebar title={title}>
-			{isLoading ? (
+	const recomendations = useSelector(selectRecommendationsItems);
+	const loadingState = useSelector(selectRecommendionsLoadingState);
+	const dispatch = useDispatch();
+
+	React.useEffect(() => {
+		if (
+			loadingState !== LoadingState.LOADED &&
+			loadingState !== LoadingState.LOADING
+		)
+			dispatch(fetchRecommended());
+	}, [dispatch, loadingState]);
+
+	if (loadingState === LoadingState.LOADING)
+		return (
+			<ContainerSidebar title={title}>
 				<ContainerItem>
 					<LoaderCircular />
 				</ContainerItem>
-			) : recomendations && recomendations.length ? (
-				recomendations.map((item, index) => (
-					<Author key={index} author={{ ...item }} />
-				))
+			</ContainerSidebar>
+		);
+
+	if (loadingState !== LoadingState.LOADED) return null;
+
+	return (
+		<ContainerSidebar title={title}>
+			{recomendations && recomendations.length ? (
+				recomendations.map((item, index) =>
+					index < 3 ? (
+						<Author key={index} author={{ ...item }} />
+					) : null
+				)
 			) : (
-				<ContainerItem className={classes.noRecommendations}>
+				<ContainerItem className={classes.notFound}>
 					Рекомендаций не найдено
 				</ContainerItem>
 			)}

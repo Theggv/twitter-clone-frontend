@@ -13,10 +13,10 @@ import {
 	ContainerItemTitle,
 } from '../../../../../containers/Containers';
 import { ButtonCounter } from './ButtonCounter';
-import { TweetImages } from './TweetImages';
 import { TweetInterface } from '../../../../../store/ducks/tweet';
 import { formatDateDifference } from '../../../../../helpers';
 import { Link, useHistory } from 'react-router-dom';
+import { MediaContainer } from '../MediaContainer';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -128,6 +128,10 @@ export const TweetMini: React.FC<TweetProps> = ({
 		history.push(`/${user.userName}/status/${id}`);
 	};
 
+	const handleClickButton = (e: any) => {
+		e.stopPropagation();
+	};
+
 	return (
 		<ContainerAvatar
 			source={user.avatarUrl}
@@ -153,24 +157,24 @@ export const TweetMini: React.FC<TweetProps> = ({
 					<Link
 						className={classes.link}
 						to={`/${user.userName}/status/${id}`}
+						onClick={handleClickButton}
 					>
 						<span>{formatDateDifference(createdAtUTC)}</span>
 					</Link>
 				</div>
 			</ContainerItemTitle>
 			<div className={classes.contentBlock}>{text}</div>
-			<div className={classes.media}>
-				<TweetImages
-					media={[
-						'https://pbs.twimg.com/media/EoAUQ46XcAAxU77?format=jpg&name=large',
-						'https://pbs.twimg.com/media/EoAUQ47W8AQwi9B?format=jpg&name=large',
-						'https://pbs.twimg.com/media/EoAUQ47XcAEkYrZ?format=jpg&name=small',
-						'https://pbs.twimg.com/media/EoAUQ48W4AgNEit?format=jpg&name=large',
-					]}
-				></TweetImages>
-			</div>
+			{attachments && attachments.length ? (
+				<div className={classes.media}>
+					<MediaContainer></MediaContainer>
+				</div>
+			) : null}
 			<div className={classes.footer}>
-				<ButtonCounter icon={<CommentIcon />} text={commentsCount} />
+				<ButtonCounter
+					icon={<CommentIcon />}
+					text={commentsCount}
+					onClick={handleClickButton}
+				/>
 				<ButtonCounter
 					icon={<RetweetIcon />}
 					hoverProps={{
@@ -178,6 +182,7 @@ export const TweetMini: React.FC<TweetProps> = ({
 						backgroundColor: 'rgba(23, 191, 99, 0.1)',
 					}}
 					text={retweetsCount + retweetsWithCommentCount}
+					onClick={handleClickButton}
 				/>
 				<ButtonCounter
 					icon={<LikeIcon />}
@@ -186,8 +191,12 @@ export const TweetMini: React.FC<TweetProps> = ({
 						backgroundColor: 'rgba(224, 36, 94, 0.1)',
 					}}
 					text={likesCount}
+					onClick={handleClickButton}
 				/>
-				<ButtonCounter icon={<OptionsIcon />} />
+				<ButtonCounter
+					icon={<OptionsIcon />}
+					onClick={handleClickButton}
+				/>
 			</div>
 		</ContainerAvatar>
 	);
