@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import React from 'react';
+import { GifElement } from './GifElement';
 import { ImageLink } from './ImageLink';
 import { VideoElement } from './VideoElement';
 
@@ -57,7 +58,16 @@ export const MediaContainer: React.FC<MediaContainerProps> = ({
 					/>
 				</div>
 			);
-		else if (media[0].type.includes('image/gif')) return null;
+		else if (media[0].type.includes('image/gif'))
+			return (
+				<div className={classes.container}>
+					<GifElement
+						src={media[0].path}
+						editable={editable}
+						onClose={handleDeleteClick}
+					/>
+				</div>
+			);
 		else if (media[0].type.includes('text')) return null;
 		else
 			return (
