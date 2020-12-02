@@ -23,6 +23,7 @@ import { LoaderCircular } from '../../../containers/Loaders';
 import { HeaderButton, HeaderLink } from '../../../containers/Buttons/Header';
 import { Link, useLocation } from 'react-router-dom';
 import { ButtonWithIcon } from '../../../containers/Buttons';
+import { scrollToTop } from '../../../helpers';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -146,6 +147,7 @@ const Header: React.FC = (): React.ReactElement | null => {
 							className: classes.twitterIcon,
 							size: 49,
 							icon: <TwitterIcon />,
+							onClick: () => scrollToTop(),
 						}}
 					/>
 				</Link>
@@ -158,6 +160,7 @@ const Header: React.FC = (): React.ReactElement | null => {
 							showText={matches}
 							to='/home'
 							selected={location.pathname === '/home'}
+							onClick={scrollToTop}
 						/>
 						<HeaderLink
 							icon={<HashtagIcon />}

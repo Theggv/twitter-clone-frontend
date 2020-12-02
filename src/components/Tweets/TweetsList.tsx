@@ -8,9 +8,9 @@ import {
 	selectIsTweetsLoading,
 	selectTweetsItems,
 } from '../../store/ducks/tweets';
-import UsersSuggestion from '../Home/Main/Suggestions/ContentBlock/UsersSuggestion';
 import { ContentDivider } from '../../containers/Elements';
 import { TweetMini } from './TweetMini';
+import { UsersSuggestion } from '../Suggestions/ContentBlock/UsersSuggestion';
 
 interface TweetsListProps {
 	query?: string;
@@ -30,20 +30,28 @@ export const TweetsList: React.FC<TweetsListProps> = (): React.ReactElement | nu
 	if (isLoading) return <LoaderCircular />;
 	if (!isLoaded) return null;
 
+	const showSuggestions = false;
+
 	return (
 		<>
-			{tweets.map((item: TweetInterface, index: number) => (
-				<div key={index}>
+			{tweets
+				.filter((_, i) => i < 3)
+				.map((item: TweetInterface, index: number) => (
 					<TweetMini {...item} />
-					{index === 3 && (
-						<>
-							<ContentDivider />
-							<UsersSuggestion />
-							<ContentDivider />
-						</>
-					)}
-				</div>
-			))}
+				))}
+			{showSuggestions && (
+				<>
+					<ContentDivider />
+					<UsersSuggestion />
+					<ContentDivider />
+				</>
+			)}
+
+			{tweets
+				.filter((_, i) => i > 3)
+				.map((item: TweetInterface, index: number) => (
+					<TweetMini {...item} />
+				))}
 		</>
 	);
 };

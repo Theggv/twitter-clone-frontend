@@ -1,19 +1,19 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 
-import Author from './Author';
+import { UserSuggestion } from './UserSuggestion';
 
 import {
 	fetchRecommended,
 	LoadingState,
 	selectRecommendationsItems,
 	selectRecommendionsLoadingState,
-} from '../../../../../../store/ducks/recommendations';
+} from '../../../store/ducks/recommendations';
 import {
 	ContainerItem,
 	ContainerSidebar,
-} from '../../../../../../containers/Containers';
-import { LoaderCircular } from '../../../../../../containers/Loaders';
+} from '../../../containers/Containers';
+import { LoaderCircular } from '../../../containers/Loaders';
 import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-interface AuthorRecomendationsProps {
+interface UsersSuggestionProps {
 	title: string;
 }
 
-const AuthorRecomendations: React.FC<AuthorRecomendationsProps> = ({
+export const UsersSuggestion: React.FC<UsersSuggestionProps> = ({
 	title,
 }): React.ReactElement | null => {
 	const classes = useStyles();
@@ -60,7 +60,7 @@ const AuthorRecomendations: React.FC<AuthorRecomendationsProps> = ({
 			{recomendations && recomendations.length ? (
 				recomendations.map((item, index) =>
 					index < 3 ? (
-						<Author key={index} author={{ ...item }} />
+						<UserSuggestion key={index} user={{ ...item }} />
 					) : null
 				)
 			) : (
@@ -71,5 +71,3 @@ const AuthorRecomendations: React.FC<AuthorRecomendationsProps> = ({
 		</ContainerSidebar>
 	);
 };
-
-export default AuthorRecomendations;

@@ -66,6 +66,7 @@ interface HeaderLinkProps {
 	selected?: boolean;
 	showText?: boolean;
 	to: string;
+	onClick?: () => void;
 }
 
 export const HeaderLink: React.FC<HeaderLinkProps> = ({
@@ -75,11 +76,16 @@ export const HeaderLink: React.FC<HeaderLinkProps> = ({
 	selected = false,
 	showText = true,
 	to,
+	onClick,
 }) => {
 	const classes = useStyles();
 
 	return (
-		<Link to={to} className={clsx(classes.root, className)}>
+		<Link
+			to={to}
+			className={clsx(classes.root, className)}
+			onClick={onClick}
+		>
 			<div
 				id='button'
 				className={clsx(classes.button, selected && classes.selected)}

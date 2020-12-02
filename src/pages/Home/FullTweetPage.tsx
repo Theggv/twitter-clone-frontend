@@ -4,11 +4,14 @@ import { ContentBlock } from '../../components/Home/Main/ContentBlock';
 import { TopBlock } from '../../components/TopBlock';
 import { SideBar } from '../../components/Home/Main/Sidebar';
 
-import { Status } from '../../components/Home/Main/ContentBlock/Status';
-import TopicRecomendations from '../../components/Home/Main/Suggestions/Sidebar/Topic';
-import AuthorRecomendations from '../../components/Home/Main/Suggestions/Sidebar/Author';
-import { Search } from '../../components/Home/Main/Search';
-import { TopicProps } from '../../components/Home/Main/Suggestions/Sidebar/Topic/Topic';
+import { Status } from '../../components/Tweets/Status';
+import {
+	TopicsSuggestion,
+	TopicProps,
+} from '../../components/Suggestions/Topic';
+import { UsersSuggestion } from '../../components/Suggestions/User';
+import { Search } from '../../components/Search';
+import { scrollToTop } from '../../helpers';
 
 const useStyles = makeStyles((theme) => ({
 	header: {
@@ -31,8 +34,6 @@ export const FullTweetPage: React.FC = () => {
 
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up(1005));
-
-	const scrollToTop = () => window.scroll(0, 0);
 
 	const recs: TopicProps[] = [
 		{ title: 'PROUD OF HARRY', actualWhere: 'Россия', numTweets: 56500 },
@@ -63,8 +64,8 @@ export const FullTweetPage: React.FC = () => {
 			{matches && (
 				<SideBar>
 					<Search></Search>
-					<AuthorRecomendations title={'Вам может понравиться'} />
-					<TopicRecomendations recomendations={recs} />
+					<UsersSuggestion title={'Вам может понравиться'} />
+					<TopicsSuggestion recomendations={recs} />
 				</SideBar>
 			)}
 		</>

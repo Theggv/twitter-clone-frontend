@@ -1,14 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { LoaderCircular } from '../../../../containers/Loaders';
+import { LoaderCircular } from '../../containers/Loaders';
 import {
 	selectIsTweetLoading,
 	selectIsTweetLoaded,
 	fetchTweet,
 	selectTweetContent,
-} from '../../../../store/ducks/tweet';
-import { TweetFull } from '../../../Tweets/TweetFull';
+} from '../../store/ducks/tweet';
+import { TweetFull } from './TweetFull';
 
 export const Status: React.FC = () => {
 	const { tweetId } = useParams<{

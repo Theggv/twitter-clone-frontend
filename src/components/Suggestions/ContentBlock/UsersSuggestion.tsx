@@ -1,7 +1,10 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import { ContainerItem, ContainerItemTitle } from '../../../../../containers/Containers';
-import Author, { AuthorProps } from '../Sidebar/Author/Author';
+import {
+	ContainerItem,
+	ContainerItemTitle,
+} from '../../../containers/Containers';
+import { UserSuggestion, UserSuggestionProps } from '../User/UserSuggestion';
 
 const useStyles = makeStyles((theme) => ({
 	root: {},
@@ -17,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 		fontWeight: 800,
 	},
 	titleButton: {},
-	recommendations: {
+	suggestions: {
 		textAlign: 'left',
 	},
 	buttonMore: {
@@ -30,12 +33,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface UsersSuggestionProps {
-	recommendations?: Array<AuthorProps>;
+	suggestions?: UserSuggestionProps[];
 	onClickShowMore?: () => void;
 }
 
-const UsersSuggestion: React.FC<UsersSuggestionProps> = ({
-	recommendations,
+export const UsersSuggestion: React.FC<UsersSuggestionProps> = ({
+	suggestions,
 	onClickShowMore,
 }) => {
 	const classes = useStyles();
@@ -45,9 +48,9 @@ const UsersSuggestion: React.FC<UsersSuggestionProps> = ({
 			<ContainerItem hoverType='disabled'>
 				<ContainerItemTitle>Кого читать</ContainerItemTitle>
 			</ContainerItem>
-			{recommendations &&
-				recommendations.map((item, index) => (
-					<Author key={index} {...item} />
+			{suggestions &&
+				suggestions.map((item, index) => (
+					<UserSuggestion key={index} {...item} />
 				))}
 			<ContainerItem>
 				<div
@@ -60,5 +63,3 @@ const UsersSuggestion: React.FC<UsersSuggestionProps> = ({
 		</div>
 	);
 };
-
-export default UsersSuggestion;

@@ -2,8 +2,8 @@ import { Button, makeStyles } from '@material-ui/core';
 import React from 'react';
 
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
-import { UserInterface } from '../../../../../../store/ducks/recommendations';
-import { ContainerAvatar } from '../../../../../../containers/Containers';
+import { UserInterface } from '../../../store/ducks/recommendations';
+import { ContainerAvatar } from '../../../containers/Containers';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: 'column',
 		textAlign: 'left',
 	},
-	author: {
+	userInfo: {
 		fontWeight: 700,
 		alignItems: 'center',
 	},
@@ -46,40 +46,32 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export interface AuthorProps {
-	author?: UserInterface;
+export interface UserSuggestionProps {
+	user: UserInterface;
 	onReadClick?: () => void;
 	detail?: boolean;
 }
 
-const Author: React.FC<AuthorProps> = ({
-	author = {
-		fullName: 'Team Secret',
-		userName: 'teamsecret',
-		avatarUrl:
-			'https://pbs.twimg.com/profile_images/1322870988137205760/4UPgWLRP_bigger.jpg',
-		description:
-			'Official Twitter of Team Secret. Business inquiries: management@teamsecret.gg | @TeamSecret on all socials',
-		verified: true,
-	},
+export const UserSuggestion: React.FC<UserSuggestionProps> = ({
+	user,
 	detail = false,
 }): React.ReactElement => {
 	const classes = useStyles();
 
 	return (
-		<ContainerAvatar source={author.avatarUrl} className={classes.root}>
+		<ContainerAvatar source={user.avatarUrl} className={classes.root}>
 			<div className={classes.top}>
 				<div className={classes.left}>
-					<div className={classes.author}>
-						{author.fullName}
-						{author.verified ? (
+					<div className={classes.userInfo}>
+						{user.fullName}
+						{user.verified ? (
 							<VerifiedUserIcon
 								color='primary'
 								className={classes.icon}
 							/>
 						) : null}
 					</div>
-					<div className={classes.url}>@{author.userName}</div>
+					<div className={classes.url}>@{user.userName}</div>
 				</div>
 				<div className={classes.right}>
 					<Button
@@ -91,15 +83,13 @@ const Author: React.FC<AuthorProps> = ({
 					</Button>
 				</div>
 			</div>
-			{detail && author.description ? (
+			{detail && user.description ? (
 				<div className={classes.bottom}>
 					<div className={classes.description}>
-						{author.description}
+						{user.description}
 					</div>
 				</div>
 			) : null}
 		</ContainerAvatar>
 	);
 };
-
-export default Author;

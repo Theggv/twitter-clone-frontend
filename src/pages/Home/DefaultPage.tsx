@@ -1,19 +1,20 @@
 import { makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { ContentBlock } from '../../components/Home/Main/ContentBlock';
 import { TopBlock } from '../../components/TopBlock';
 import { SideBar } from '../../components/Home/Main/Sidebar';
 import { ButtonSettings } from '../../containers/Buttons';
-import { fetchTweets } from '../../store/ducks/tweets';
 
 import CreatePost from '../../components/AddTweet/CreatePost';
 import { ContentDivider } from '../../containers/Elements';
 import { TweetsList } from '../../components/Tweets/TweetsList';
-import { Search } from '../../components/Home/Main/Search';
-import TopicRecomendations from '../../components/Home/Main/Suggestions/Sidebar/Topic';
-import AuthorRecomendations from '../../components/Home/Main/Suggestions/Sidebar/Author';
-import { TopicProps } from '../../components/Home/Main/Suggestions/Sidebar/Topic/Topic';
+import { Search } from '../../components/Search';
+import { scrollToTop } from '../../helpers';
+import {
+	TopicsSuggestion,
+	TopicProps,
+} from '../../components/Suggestions/Topic';
+import { UsersSuggestion } from '../../components/Suggestions/User';
 
 const useStyles = makeStyles((theme) => ({
 	header: {
@@ -37,18 +38,6 @@ export const DefaultPage: React.FC = () => {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up(1005));
 
-	const dispatch = useDispatch();
-	const [shouldUpdateTweets, setShouldUpdateTweets] = React.useState(false);
-
-	React.useEffect(() => {
-		if (shouldUpdateTweets) {
-			dispatch(fetchTweets());
-			setShouldUpdateTweets((prev) => false);
-		}
-	}, [dispatch, shouldUpdateTweets]);
-
-	const updateTweets = () => setShouldUpdateTweets(true);
-
 	const recs: TopicProps[] = [
 		{ title: 'PROUD OF HARRY', actualWhere: 'Россия', numTweets: 56500 },
 		{ title: 'Добрый', actualWhere: 'Россия', numTweets: 2407 },
@@ -65,7 +54,7 @@ export const DefaultPage: React.FC = () => {
 						<div className={classes.header}>
 							<div
 								className={classes.headerTitle}
-								onClick={updateTweets}
+								onClick={scrollToTop}
 							>
 								Главная
 							</div>
@@ -80,8 +69,8 @@ export const DefaultPage: React.FC = () => {
 			{matches && (
 				<SideBar>
 					<Search></Search>
-					<TopicRecomendations recomendations={recs} />
-					<AuthorRecomendations title={'Кого читать'} />
+					<TopicsSuggestion recomendations={recs} />
+					<UsersSuggestion title={'Кого читать'} />
 				</SideBar>
 			)}
 		</>
