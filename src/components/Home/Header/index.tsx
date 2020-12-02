@@ -134,93 +134,97 @@ const Header: React.FC = (): React.ReactElement | null => {
 	}
 
 	return (
-		<Wrapper>
-			<ButtonWithIconLink
-				to='/home'
-				buttonProps={{
-					className: classes.twitterIcon,
-					size: 49,
-					icon: <TwitterIcon />,
-				}}
-			/>
-			{isAuth ? (
-				<div className={classes.buttonsContainer}>
-					<HeaderLink
-						icon={<HomeIcon />}
-						text='Главная'
-						showText={matches}
-						to='/home'
-						selected={location.pathname === '/home'}
-					/>
-					<HeaderLink
-						icon={<HashtagIcon />}
-						text='Поиск'
-						showText={matches}
-						to='/search'
-						selected={location.pathname.slice(0, 7) === '/search'}
-					/>
-					<HeaderButton
-						icon={<NotificationsIcon />}
-						text='Уведомления'
-						showText={matches}
-					/>
-					<HeaderButton
-						icon={<MailOutlineIcon />}
-						text='Сообщения'
-						showText={matches}
-					/>
-					<HeaderButton
-						icon={<PersonIcon />}
-						text='Профиль'
-						showText={matches}
-					/>
-					<HeaderButton
-						icon={<MoreHorizIcon />}
-						text='Ещё'
-						showText={matches}
-					/>
-				</div>
-			) : (
-				<div className={classes.buttonsContainer}>
-					<HeaderLink
-						icon={<HashtagIcon />}
-						text='Поиск'
-						showText={matches}
-						to='/search'
-					/>
-					<HeaderButton
-						icon={<SettingsIcon />}
-						text='Настройки'
-						showText={matches}
-					/>
-				</div>
-			)}
-			{isAuth ? (
-				matches ? (
-					<Button
-						variant='contained'
-						color='primary'
-						fullWidth
-						className={classes.buttonCreatePost}
-						onClick={() => setCreatePostVisible(true)}
-					>
-						Твитнуть
-					</Button>
-				) : (
+		<>
+			<Wrapper>
+				<ButtonWithIconLink
+					to='/home'
+					buttonProps={{
+						className: classes.twitterIcon,
+						size: 49,
+						icon: <TwitterIcon />,
+					}}
+				/>
+				{isAuth ? (
 					<div className={classes.buttonsContainer}>
+						<HeaderLink
+							icon={<HomeIcon />}
+							text='Главная'
+							showText={matches}
+							to='/home'
+							selected={location.pathname === '/home'}
+						/>
+						<HeaderLink
+							icon={<HashtagIcon />}
+							text='Поиск'
+							showText={matches}
+							to='/search'
+							selected={
+								location.pathname.slice(0, 7) === '/search'
+							}
+						/>
 						<HeaderButton
-							icon={<AddCircleIcon />}
-							selected
-							onClick={() => setCreatePostVisible(true)}
+							icon={<NotificationsIcon />}
+							text='Уведомления'
+							showText={matches}
+						/>
+						<HeaderButton
+							icon={<MailOutlineIcon />}
+							text='Сообщения'
+							showText={matches}
+						/>
+						<HeaderButton
+							icon={<PersonIcon />}
+							text='Профиль'
+							showText={matches}
+						/>
+						<HeaderButton
+							icon={<MoreHorizIcon />}
+							text='Ещё'
+							showText={matches}
 						/>
 					</div>
-				)
-			) : null}
+				) : (
+					<div className={classes.buttonsContainer}>
+						<HeaderLink
+							icon={<HashtagIcon />}
+							text='Поиск'
+							showText={matches}
+							to='/search'
+						/>
+						<HeaderButton
+							icon={<SettingsIcon />}
+							text='Настройки'
+							showText={matches}
+						/>
+					</div>
+				)}
+				{isAuth ? (
+					matches ? (
+						<Button
+							variant='contained'
+							color='primary'
+							fullWidth
+							className={classes.buttonCreatePost}
+							onClick={() => setCreatePostVisible(true)}
+						>
+							Твитнуть
+						</Button>
+					) : (
+						<div className={classes.buttonsContainer}>
+							<HeaderButton
+								icon={<AddCircleIcon />}
+								selected
+								onClick={() => setCreatePostVisible(true)}
+							/>
+						</div>
+					)
+				) : null}
+			</Wrapper>
 			<CreatePostModal
 				visible={createPostVisible}
 				onClose={() => setCreatePostVisible(false)}
 			></CreatePostModal>
-		</Wrapper>
+		</>
 	);
 };
 

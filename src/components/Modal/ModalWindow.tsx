@@ -4,6 +4,7 @@ import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { ContainerItem } from '../../containers/Containers';
 import { ButtonWithIcon } from '../../containers/Buttons';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
 	dialog: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export interface ModalWindowProps {
+	className?: string;
 	visible?: boolean;
 	onClose?: () => void;
 }
@@ -40,6 +42,7 @@ const ModalWindow: React.FC<
 	}
 > = ({
 	children,
+	className,
 	visible = false,
 	onClose,
 	title,
@@ -69,7 +72,7 @@ const ModalWindow: React.FC<
 					</div>
 				</ContainerItem>
 			)}
-			<div className={classes.content}>{children}</div>
+			<div className={clsx(classes.content, className)}>{children}</div>
 		</Dialog>
 	);
 };
