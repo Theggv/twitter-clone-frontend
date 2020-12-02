@@ -4,7 +4,10 @@ import { Link, makeStyles } from '@material-ui/core';
 
 import TwitterIcon from '@material-ui/icons/Twitter';
 import TwitterInput from './TwitterInput';
-import ModalWindow, { ModalWindowProps } from '../Modal/ModalWindow';
+import {
+	ContainerModal,
+	ContainerModalProps,
+} from '../../containers/Containers';
 
 const useStyles = makeStyles((theme) => ({
 	title: {
@@ -55,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-interface SignInDialogProps extends ModalWindowProps {}
+interface SignInDialogProps extends ContainerModalProps {}
 
 const SignInDialog: React.FC<SignInDialogProps> = ({
 	visible = false,
@@ -93,7 +96,7 @@ const SignInDialog: React.FC<SignInDialogProps> = ({
 	);
 
 	return (
-		<ModalWindow
+		<ContainerModal
 			visible={visible}
 			onClose={onClose}
 			title={() => titleBlock}
@@ -153,7 +156,7 @@ const SignInDialog: React.FC<SignInDialogProps> = ({
 					Зарегистрироваться в Твиттере
 				</Link>
 			</div>
-		</ModalWindow>
+		</ContainerModal>
 	);
 };
 

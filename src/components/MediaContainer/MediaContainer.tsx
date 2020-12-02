@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import React from 'react';
 import { GifElement } from './GifElement';
-import { ImageLink } from './ImageLink';
+import { ImageLinkElement } from './ImageLinkElement';
 import { VideoElement } from './VideoElement';
 
 const useStyles = makeStyles((theme) => ({
@@ -73,13 +73,13 @@ export const MediaContainer: React.FC<MediaContainerProps> = ({
 			return (
 				<React.Fragment>
 					<div className={classes.container}>
-						<ImageLink
+						<ImageLinkElement
 							src={media[0].path}
 							editable={editable}
 							onClose={handleDeleteClick}
 						/>
 						{media.length > 3 && (
-							<ImageLink
+							<ImageLinkElement
 								src={media[3].path}
 								onClose={handleDeleteClick}
 							/>
@@ -92,12 +92,12 @@ export const MediaContainer: React.FC<MediaContainerProps> = ({
 								classes.splitterRight
 							)}
 						>
-							<ImageLink
+							<ImageLinkElement
 								src={media[1].path}
 								onClose={handleDeleteClick}
 							/>
 							{media.length > 2 && (
-								<ImageLink
+								<ImageLinkElement
 									src={media[2].path}
 									className={classes.splitterBottom}
 									onClose={handleDeleteClick}

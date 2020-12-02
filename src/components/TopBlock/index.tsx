@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 
-import { ButtonWithIcon } from '../../../../../containers/Buttons';
+import { ButtonWithIcon } from '../../containers/Buttons';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { ContainerItem } from '../../../../../containers/Containers';
+import { ContainerItem } from '../../containers/Containers';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({

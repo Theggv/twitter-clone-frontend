@@ -1,13 +1,13 @@
 import { makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import React from 'react';
 import { ContentBlock } from '../../components/Home/Main/ContentBlock';
-import { TopBlock } from '../../components/Home/Main/ContentBlock/TopBlock';
+import { TopBlock } from '../../components/TopBlock';
 import { SideBar } from '../../components/Home/Main/Sidebar';
 
 import { Status } from '../../components/Home/Main/ContentBlock/Status';
 import TopicRecomendations from '../../components/Home/Main/Suggestions/Sidebar/Topic';
 import AuthorRecomendations from '../../components/Home/Main/Suggestions/Sidebar/Author';
-import Search from '../../components/Home/Main/Sidebar/Search';
+import { Search } from '../../components/Home/Main/Search';
 import { TopicProps } from '../../components/Home/Main/Suggestions/Sidebar/Topic/Topic';
 
 const useStyles = makeStyles((theme) => ({

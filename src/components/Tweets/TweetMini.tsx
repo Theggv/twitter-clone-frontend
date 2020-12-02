@@ -11,10 +11,10 @@ import OptionsIcon from '@material-ui/icons/KeyboardArrowUp';
 import {
 	ContainerAvatar,
 	ContainerItemTitle,
-} from '../../../../../containers/Containers';
+} from '../../containers/Containers';
 import { ButtonCounter } from './ButtonCounter';
-import { TweetInterface } from '../../../../../store/ducks/tweet';
-import { formatDateDifference } from '../../../../../helpers';
+import { TweetInterface } from '../../store/ducks/tweet';
+import { formatDateDifference } from '../../helpers';
 import { Link, useHistory } from 'react-router-dom';
 import { MediaContainer } from '../MediaContainer';
 

@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import React from 'react';
-import { ButtonWithIcon } from '../../../../../containers/Buttons';
-import theme from '../../../../../theme';
+import { ButtonWithIcon } from '../../containers/Buttons';
+import theme from '../../theme';
 
 const useStyles = makeStyles((theme) => ({
 	root: {

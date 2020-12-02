@@ -8,7 +8,7 @@ import {
 	fetchTweet,
 	selectTweetContent,
 } from '../../../../store/ducks/tweet';
-import { TweetFull } from './Tweet/TweetFull';
+import { TweetFull } from '../../../Tweets/TweetFull';
 
 export const Status: React.FC = () => {
 	const { tweetId } = useParams<{

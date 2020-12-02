@@ -4,7 +4,7 @@ import {
 	ContainerAvatar,
 	ContainerItem,
 	ContainerItemTitle,
-} from '../../../../../containers/Containers';
+} from '../../containers/Containers';
 
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import MoreIcon from '@material-ui/icons/MoreHoriz';
@@ -15,7 +15,7 @@ import OptionsIcon from '@material-ui/icons/KeyboardArrowUp';
 
 import { TweetProps } from './TweetMini';
 import { ButtonCounter } from './ButtonCounter';
-import { cutNumber2, formatDateFull } from '../../../../../helpers';
+import { cutNumber2, formatDateFull } from '../../helpers';
 import clsx from 'clsx';
 import { MediaContainer } from '../MediaContainer';
 

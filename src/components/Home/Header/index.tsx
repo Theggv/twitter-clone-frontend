@@ -21,8 +21,8 @@ import {
 } from '../../../store/ducks/loading';
 import { LoaderCircular } from '../../../containers/Loaders';
 import { HeaderButton, HeaderLink } from '../../../containers/Buttons/Header';
-import { ButtonWithIconLink } from '../../../containers/Buttons/ButtonWithIconLink';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { ButtonWithIcon } from '../../../containers/Buttons';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -92,6 +92,10 @@ const useStyles = makeStyles((theme) => ({
 		width: 230,
 		minHeight: 49,
 	},
+	link: {
+		textDecoration: 'none',
+		color: 'inherit',
+	},
 	twitterIcon: {
 		margin: '2px -3px 4px 1px',
 
@@ -136,14 +140,16 @@ const Header: React.FC = (): React.ReactElement | null => {
 	return (
 		<>
 			<Wrapper>
-				<ButtonWithIconLink
-					to='/home'
-					buttonProps={{
-						className: classes.twitterIcon,
-						size: 49,
-						icon: <TwitterIcon />,
-					}}
-				/>
+				<Link to='/home' className={classes.link}>
+					<ButtonWithIcon
+						{...{
+							className: classes.twitterIcon,
+							size: 49,
+							icon: <TwitterIcon />,
+						}}
+					/>
+				</Link>
+
 				{isAuth ? (
 					<div className={classes.buttonsContainer}>
 						<HeaderLink

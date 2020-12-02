@@ -1,7 +1,10 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import CreatePost from '../Home/Main/ContentBlock/CreatePost';
-import ModalWindow, { ModalWindowProps } from './ModalWindow';
+import CreatePost from '../AddTweet/CreatePost';
+import {
+	ContainerModal,
+	ContainerModalProps,
+} from '../../containers/Containers';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -12,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-interface CreatePostModalProps extends ModalWindowProps {}
+interface CreatePostModalProps extends ContainerModalProps {}
 
 const CreatePostModal: React.FC<CreatePostModalProps> = ({
 	visible,
@@ -21,14 +24,14 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
 	const classes = useStyles();
 
 	return (
-		<ModalWindow
+		<ContainerModal
 			className={classes.root}
 			visible={visible}
 			onClose={onClose}
 			fullWidth
 		>
 			<CreatePost className={classes.createPost} minRows={1}></CreatePost>
-		</ModalWindow>
+		</ContainerModal>
 	);
 };
 

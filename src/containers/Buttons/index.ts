@@ -1,4 +1,6 @@
 export * from './Header';
+export * from './DarkButton';
+
 export * from './ButtonFileDialog';
-export * from './ButtonWithIcon';
 export * from './ButtonSettings';
+export * from './ButtonWithIcon';

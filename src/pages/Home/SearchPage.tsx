@@ -1,11 +1,11 @@
 import { makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import React from 'react';
 import { ContentBlock } from '../../components/Home/Main/ContentBlock';
-import { TopBlock } from '../../components/Home/Main/ContentBlock/TopBlock';
+import { TopBlock } from '../../components/TopBlock';
 import { SideBar } from '../../components/Home/Main/Sidebar';
 
 import { ButtonSettings } from '../../containers/Buttons';
-import { SearchButtons } from '../../components/Home/Main/ContentBlock/TopBlock/SearchButtons';
+import { SearchButtons } from '../../components/TopBlock/SearchButtons';
 
 const useStyles = makeStyles((theme) => ({
 	header: {

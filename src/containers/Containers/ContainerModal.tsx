@@ -2,8 +2,8 @@ import { Dialog, makeStyles } from '@material-ui/core';
 import React from 'react';
 
 import CloseIcon from '@material-ui/icons/Close';
-import { ContainerItem } from '../../containers/Containers';
-import { ButtonWithIcon } from '../../containers/Buttons';
+import { ContainerItem } from './ContainerItem';
+import { ButtonWithIcon } from '../Buttons';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,14 +27,14 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export interface ModalWindowProps {
+export interface ContainerModalProps {
 	className?: string;
 	visible?: boolean;
 	onClose?: () => void;
 }
 
-const ModalWindow: React.FC<
-	ModalWindowProps & {
+export const ContainerModal: React.FC<
+	ContainerModalProps & {
 		title?: React.FC;
 		withoutTitle?: boolean;
 		disableExitButton?: boolean;
@@ -76,5 +76,3 @@ const ModalWindow: React.FC<
 		</Dialog>
 	);
 };
-
-export default ModalWindow;

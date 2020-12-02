@@ -1,19 +1,13 @@
 import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { DeleteButton } from '../../../../../containers/Buttons/DarkButton';
+import { DarkButton, DeleteButton } from '../../containers/Buttons/DarkButton';
 
 const useStyles = makeStyles((theme) => ({
-	link: {
-		display: 'flex',
-		flex: 1,
-		border: '1px solid rgba(128, 128, 128, 0.15)',
-	},
 	container: {
 		flex: 1,
 
 		position: 'relative',
+		cursor: 'pointer',
 
 		backgroundSize: 'cover',
 		backgroundRepeat: 'no-repeat',
@@ -31,18 +25,22 @@ const useStyles = makeStyles((theme) => ({
 		top: 5,
 		left: 5,
 	},
+	gifLabel: {
+		position: 'absolute',
+		bottom: 5,
+		left: 10,
+		fontSize: 13,
+	},
 }));
 
-interface ImageLinkProps {
+interface GifElementProps {
 	src: string;
-	className?: string;
 	editable?: boolean;
 	onClose?: (src: string) => void;
 }
 
-export const ImageLink: React.FC<ImageLinkProps> = ({
+export const GifElement: React.FC<GifElementProps> = ({
 	src,
-	className,
 	editable = true,
 	onClose,
 }) => {
@@ -56,23 +54,18 @@ export const ImageLink: React.FC<ImageLinkProps> = ({
 	};
 
 	return (
-		<Link
-			className={clsx(classes.link, className)}
-			to={src}
-			target='_blank'
+		<div
+			className={classes.container}
+			style={{ backgroundImage: `url(${src})` }}
 		>
-			<div
-				className={classes.container}
-				style={{ backgroundImage: `url(${src})` }}
-			>
-				<img src={src} alt='' />
-				{editable && (
-					<DeleteButton
-						className={classes.deleteButton}
-						onClick={handleDeleteClick}
-					/>
-				)}
-			</div>
-		</Link>
+			<img src={src} alt='' />
+			{editable && (
+				<DeleteButton
+					className={classes.deleteButton}
+					onClick={handleDeleteClick}
+				/>
+			)}
+			<DarkButton className={classes.gifLabel}>GIF</DarkButton>
+		</div>
 	);
 };

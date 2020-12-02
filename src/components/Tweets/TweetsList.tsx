@@ -1,15 +1,15 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { LoaderCircular } from '../../../../../containers/Loaders';
-import { TweetInterface } from '../../../../../store/ducks/tweet';
+import { LoaderCircular } from '../../containers/Loaders';
+import { TweetInterface } from '../../store/ducks/tweet';
 import {
 	fetchTweets,
 	selectIsTweetsLoaded,
 	selectIsTweetsLoading,
 	selectTweetsItems,
-} from '../../../../../store/ducks/tweets';
-import UsersSuggestion from '../../Suggestions/ContentBlock/UsersSuggestion';
-import { ContentDivider } from '../../../../../containers/Elements';
+} from '../../store/ducks/tweets';
+import UsersSuggestion from '../Home/Main/Suggestions/ContentBlock/UsersSuggestion';
+import { ContentDivider } from '../../containers/Elements';
 import { TweetMini } from './TweetMini';
 
 interface TweetsListProps {

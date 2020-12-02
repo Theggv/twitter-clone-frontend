@@ -3,17 +3,14 @@ import React, { useState } from 'react';
 
 import AutoSizeTextArea from './AutoSizeTextArea';
 
-import GifIcon from '../../../../../containers/Icons/GifIcon';
+import GifIcon from '../../containers/Icons/GifIcon';
 import PollIcon from '@material-ui/icons/PollOutlined';
 import EmojiIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import ScheduleIcon from '@material-ui/icons/ScheduleOutlined';
-import { ContainerAvatar } from '../../../../../containers/Containers';
-import {
-	ButtonFileDialog,
-	ButtonWithIcon,
-} from '../../../../../containers/Buttons';
+import { ContainerAvatar } from '../../containers/Containers';
+import { ButtonFileDialog, ButtonWithIcon } from '../../containers/Buttons';
 import { LengthCounter } from './LengthCounter';
-import { MediaContainer, MediaElement } from '../MediaContainer';
+import { MediaContainer, MediaElement } from '../MediaContainer/MediaContainer';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({

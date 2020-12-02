@@ -5,7 +5,10 @@ import { Link, makeStyles, Typography } from '@material-ui/core';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import TwitterInput from './TwitterInput';
 import TwitterSelect from './TwitterSelect';
-import ModalWindow, { ModalWindowProps } from '../Modal/ModalWindow';
+import {
+	ContainerModal,
+	ContainerModalProps,
+} from '../../containers/Containers';
 
 const useStyles = makeStyles((theme) => ({
 	header: {
@@ -71,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-interface SignUpDialogProps extends ModalWindowProps {}
+interface SignUpDialogProps extends ContainerModalProps {}
 
 const SignUpDialog: React.FC<SignUpDialogProps> = ({
 	visible = false,
@@ -169,7 +172,7 @@ const SignUpDialog: React.FC<SignUpDialogProps> = ({
 	);
 
 	return (
-		<ModalWindow
+		<ContainerModal
 			visible={visible}
 			onClose={onClose}
 			title={() => titleBlock}
@@ -251,7 +254,7 @@ const SignUpDialog: React.FC<SignUpDialogProps> = ({
 					></TwitterSelect>
 				</div>
 			</Typography>
-		</ModalWindow>
+		</ContainerModal>
 	);
 };
 

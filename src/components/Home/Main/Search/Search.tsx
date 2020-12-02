@@ -7,10 +7,10 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		position: 'sticky',
 		top: 0,
-        
+
 		height: 54,
-        paddingTop: 5,
-        
+		paddingTop: 5,
+
 		backgroundColor: 'white',
 		zIndex: 1000,
 	},
@@ -86,7 +86,7 @@ const useInput = (initialValue: string = '') => {
 	};
 };
 
-const Search = () => {
+export const Search = () => {
 	const classes = useStyles();
 	const input = useInput();
 	const rootRef = createRef<HTMLDivElement>();
@@ -114,5 +114,3 @@ const Search = () => {
 		</div>
 	);
 };
-
-export default Search;
