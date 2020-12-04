@@ -1,17 +1,17 @@
 import { makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import React from 'react';
-import { ContentBlock } from '../../components/Home/Main/ContentBlock';
-import { TopBlock } from '../../components/TopBlock';
-import { SideBar } from '../../components/Home/Main/Sidebar';
+import { ContentBlock } from '../../../components/Home/Main/ContentBlock';
+import { TopBlock } from '../../../components/TopBlock';
+import { SideBar } from '../../../components/Home/Main/Sidebar';
 
-import { Status } from '../../components/Tweets/Status';
+import { Status } from '../../../components/Tweets/Status';
 import {
 	TopicsSuggestion,
 	TopicProps,
-} from '../../components/Suggestions/Topic';
-import { UsersSuggestion } from '../../components/Suggestions/User';
-import { Search } from '../../components/Search';
-import { scrollToTop } from '../../helpers';
+} from '../../../components/Suggestions/Topic';
+import { UsersSuggestion } from '../../../components/Suggestions/User';
+import { Search } from '../../../components/Search';
+import { scrollToTop } from '../../../helpers';
 
 const useStyles = makeStyles((theme) => ({
 	header: {

@@ -4,9 +4,9 @@ import Main from '../../components/Home/Main';
 import Header from '../../components/Home/Header';
 import { DefaultPage } from './DefaultPage';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { FullTweetPage } from './FullTweetPage';
 import { SearchPage } from './SearchPage';
 import { NotFoundPage } from './NotFoundPage';
+import { UserRoute } from './UserRoute';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -30,8 +30,8 @@ const Home: React.FC = (): React.ReactElement => {
 					<Route exact path='/home'>
 						<DefaultPage />
 					</Route>
-					<Route path='/:userName/status/:tweetId'>
-						<FullTweetPage />
+					<Route path='/:userName'>
+						<UserRoute />
 					</Route>
 					<Route path='/search'>
 						<SearchPage />
