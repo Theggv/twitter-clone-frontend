@@ -11,11 +11,12 @@ export const PasswordInput: React.FC<PasswordInputInterface> = ({
 	const [text, setText] = React.useState('');
 
 	React.useEffect(() => {
-		onChange(text);
+		if (text) onChange(text);
 	}, [onChange, text]);
 
 	return (
 		<InputElement
+			value={text}
 			autoFocus
 			fullWidth
 			title='Номер телефона, адрес электронной почты или имя пользователя'

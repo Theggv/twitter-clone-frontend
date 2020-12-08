@@ -60,7 +60,7 @@ export const InputElement: React.FC<TextFieldProps & InputElementProps> = (
 	props
 ) => {
 	const classes = useStyles();
-	const input = useInput('', props.maxLength);
+	const input = useInput(props.value as string || '', props.maxLength);
 	const [errorText, setErrorText] = useState<string | undefined>(undefined);
 
 	const deboncedInputValue = useDebounce(input.value, 200);
@@ -92,7 +92,7 @@ export const InputElement: React.FC<TextFieldProps & InputElementProps> = (
 		</div>
 	);
 
-	console.log('render of InputElement ' + props.title);
+	// console.log('render of InputElement ' + props.title);
 
 	return (
 		<TextField

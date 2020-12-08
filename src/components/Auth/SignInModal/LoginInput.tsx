@@ -9,11 +9,12 @@ export const LoginInput: React.FC<LoginInputInterface> = ({ onChange }) => {
 	const [text, setText] = React.useState('');
 
 	React.useEffect(() => {
-		onChange(text);
+		if (text) onChange(text);
 	}, [onChange, text]);
 
 	return (
 		<InputElement
+			value={text}
 			fullWidth
 			title='Пароль'
 			type='password'

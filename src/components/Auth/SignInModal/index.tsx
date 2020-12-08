@@ -15,6 +15,7 @@ import {
 } from '../../../store/ducks/auth';
 import { LoginInput } from './LoginInput';
 import { PasswordInput } from './PasswordInput';
+import { InputContainer } from './InputContainer';
 
 const useStyles = makeStyles((theme) => ({
 	title: {
@@ -84,26 +85,14 @@ export const SignInModal: React.FC<SignInModalProps> = ({
 		if (visible) document.title = 'Войти в Твиттер / Твиттер';
 	}, [visible]);
 
-	const [loginData, setLoginData] = useState({
-		login: '',
-		password: '',
-	});
-
-	useEffect(() => {
-		let isValidationFailed = !loginData.login || !loginData.password;
-
-		if (isValidationFailed !== isValidationPassed)
-			setValidationPassed((prev) => isValidationFailed);
-	}, [isValidationPassed, loginData]);
-
 	const handleLoginClick = () => {
-		if (authState !== LoadingState.REQUESTED)
-			dispatch(
-				requestAuth({
-					username: loginData.login,
-					password: loginData.password,
-				})
-			);
+		// if (authState !== LoadingState.REQUESTED)
+		// 	dispatch(
+		// 		requestAuth({
+		// 			username: loginData.login,
+		// 			password: loginData.password,
+		// 		})
+		// 	);
 	};
 
 	const Wrapper: React.FC = ({ children }) =>
@@ -137,19 +126,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
 				<div className={classes.errorMessage}>{errorMessage}</div>
 			) : null}
 			<div className={classes.inputsBlock}>
-				<LoginInput
-					onChange={(text: string) => {
-						setLoginData((prev) => ({ ...prev, login: text }));
-					}}
-				/>
-				<PasswordInput
-					onChange={(text: string) => {
-						setLoginData((prev) => ({
-							...prev,
-							password: text,
-						}));
-					}}
-				/>
+				<InputContainer onValidData={() => {}} />
 				{/* <InputElement
 					autoFocus
 					fullWidth
