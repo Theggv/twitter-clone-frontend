@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const TweetFull: React.FC<TweetProps> = ({
-	id,
+	_id,
 	createdAtUTC,
 	user,
 	text,
@@ -153,7 +153,7 @@ export const TweetFull: React.FC<TweetProps> = ({
 					titleButton={() => titleButton}
 				>
 					<div className={classes.headerText}>
-						{user?.fullName}
+						{user?.fullname}
 						{user?.verified && (
 							<VerifiedUserIcon
 								color='primary'
@@ -161,7 +161,7 @@ export const TweetFull: React.FC<TweetProps> = ({
 							/>
 						)}
 					</div>
-					<div className={classes.headerUrl}>@{user?.userName}</div>
+					<div className={classes.headerUrl}>@{user?.username}</div>
 				</ContainerItemTitle>
 			</ContainerAvatar>
 			<ContainerItem hoverType='disabled' className={classes.main}>

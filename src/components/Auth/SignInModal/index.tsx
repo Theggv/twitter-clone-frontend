@@ -3,11 +3,18 @@ import Button from '@material-ui/core/Button';
 import { Link, makeStyles } from '@material-ui/core';
 
 import TwitterIcon from '@material-ui/icons/Twitter';
-import TwitterInput from './TwitterInput';
 import {
 	ContainerModal,
 	ContainerModalProps,
-} from '../../containers/Containers';
+} from '../../../containers/Containers';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	LoadingState,
+	requestAuth,
+	selectAuthState,
+} from '../../../store/ducks/auth';
+import { LoginInput } from './LoginInput';
+import { PasswordInput } from './PasswordInput';
 
 const useStyles = makeStyles((theme) => ({
 	title: {
@@ -58,13 +65,16 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-interface SignInDialogProps extends ContainerModalProps {}
+interface SignInModalProps extends ContainerModalProps {}
 
-const SignInDialog: React.FC<SignInDialogProps> = ({
+export const SignInModal: React.FC<SignInModalProps> = ({
 	visible = false,
 	onClose,
 }) => {
 	const classes = useStyles();
+
+	const dispatch = useDispatch();
+	const authState = useSelector(selectAuthState);
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [errorMessage, setErrorMessage] = useState('');
@@ -86,6 +96,31 @@ const SignInDialog: React.FC<SignInDialogProps> = ({
 			setValidationPassed((prev) => isValidationFailed);
 	}, [isValidationPassed, loginData]);
 
+	const handleLoginClick = () => {
+		if (authState !== LoadingState.REQUESTED)
+			dispatch(
+				requestAuth({
+					username: loginData.login,
+					password: loginData.password,
+				})
+			);
+	};
+
+	const Wrapper: React.FC = ({ children }) =>
+		useMemo(
+			() => (
+				<ContainerModal
+					visible={visible}
+					onClose={onClose}
+					title={() => titleBlock}
+					disableExitButton
+				>
+					{children}
+				</ContainerModal>
+			),
+			[children]
+		);
+
 	const titleBlock = useMemo(
 		() => (
 			<div className={classes.title}>
@@ -96,18 +131,26 @@ const SignInDialog: React.FC<SignInDialogProps> = ({
 	);
 
 	return (
-		<ContainerModal
-			visible={visible}
-			onClose={onClose}
-			title={() => titleBlock}
-			disableExitButton
-		>
+		<Wrapper>
 			<div className={classes.dialogTitle}>Войти в Твиттер</div>
 			{errorMessage ? (
 				<div className={classes.errorMessage}>{errorMessage}</div>
 			) : null}
 			<div className={classes.inputsBlock}>
-				<TwitterInput
+				<LoginInput
+					onChange={(text: string) => {
+						setLoginData((prev) => ({ ...prev, login: text }));
+					}}
+				/>
+				<PasswordInput
+					onChange={(text: string) => {
+						setLoginData((prev) => ({
+							...prev,
+							password: text,
+						}));
+					}}
+				/>
+				{/* <InputElement
 					autoFocus
 					fullWidth
 					title='Номер телефона, адрес электронной почты или имя пользователя'
@@ -115,8 +158,8 @@ const SignInDialog: React.FC<SignInDialogProps> = ({
 						setLoginData((prev) => ({ ...prev, login: text }));
 						return undefined;
 					}}
-				></TwitterInput>
-				<TwitterInput
+				></InputElement>
+				<InputElement
 					fullWidth
 					title='Пароль'
 					type='password'
@@ -127,7 +170,7 @@ const SignInDialog: React.FC<SignInDialogProps> = ({
 						}));
 						return undefined;
 					}}
-				></TwitterInput>
+				></InputElement> */}
 			</div>
 
 			<Button
@@ -136,6 +179,7 @@ const SignInDialog: React.FC<SignInDialogProps> = ({
 				color='primary'
 				disabled={isValidationPassed}
 				fullWidth
+				onClick={handleLoginClick}
 			>
 				Войти
 			</Button>
@@ -156,8 +200,6 @@ const SignInDialog: React.FC<SignInDialogProps> = ({
 					Зарегистрироваться в Твиттере
 				</Link>
 			</div>
-		</ContainerModal>
+		</Wrapper>
 	);
 };
-
-export default SignInDialog;

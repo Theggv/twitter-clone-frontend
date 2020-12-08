@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { TweetInterface, TweetState } from '../../store/ducks/tweet';
-import { TweetsState } from '../../store/ducks/tweets';
+import { TweetInterface, TweetState } from '../../../store/ducks/tweet';
+import { TweetsState } from '../../../store/ducks/tweets';
 
 const fetchTweets = async (): Promise<TweetsState['items']> => {
 	const resp = await axios.get('http://localhost:3001/api/tweets');
@@ -9,7 +9,7 @@ const fetchTweets = async (): Promise<TweetsState['items']> => {
 };
 
 const fetchTweet = async (
-	id: TweetInterface['id']
+	id: TweetInterface['_id']
 ): Promise<TweetState['tweet']> => {
 	const resp = await axios.get(`http://localhost:3001/api/tweets?id=${id}`);
 	return resp.data[0];

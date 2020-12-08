@@ -30,7 +30,7 @@ export interface SetTweetActionInterface extends Action<TweetActionsType> {
 
 export interface FetchTweetActionInterface extends Action<TweetActionsType> {
 	type: TweetActionsType.FETCH_TWEET;
-	payload: TweetInterface['id'];
+	payload: TweetInterface['_id'];
 }
 
 export interface SetTweetLoadingStateActionInterface

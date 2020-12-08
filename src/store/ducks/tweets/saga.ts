@@ -1,5 +1,5 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
-import { TweetsApi } from '../../../services/api/tweetsApi';
+import { TweetsApi } from '../../../services/api/backend/tweetsApi';
 
 import { TweetsActionsType } from './actions';
 import { setTweets, setTweetsLoadingState } from './operations';
@@ -9,7 +9,7 @@ function* fetchTweetsRequestAsync() {
 	try {
 		const data = yield call(TweetsApi.fetchTweets);
 
-		// console.log(data);
+		console.log(data);
 
 		yield put(setTweets(data));
 	} catch (error) {

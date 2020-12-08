@@ -9,11 +9,11 @@ export const selectTweetsItems = createSelector(
 	(tweets) => tweets.items
 );
 
-export const selectLoadingState = (state: RootState) =>
+export const selectTweetsLoadingState = (state: RootState) =>
 	selectTweets(state).loadingState;
 
 export const selectIsTweetsLoading = (state: RootState) =>
-	selectLoadingState(state) === LoadingState.LOADING;
+	selectTweetsLoadingState(state) === LoadingState.LOADING;
 
 export const selectIsTweetsLoaded = (state: RootState) =>
-	selectLoadingState(state) === LoadingState.LOADED;
+	selectTweetsLoadingState(state) === LoadingState.LOADED;

@@ -4,9 +4,11 @@ import { LoaderCircular } from '../../containers/Loaders';
 import { TweetInterface } from '../../store/ducks/tweet';
 import {
 	fetchTweets,
+	LoadingState,
 	selectIsTweetsLoaded,
 	selectIsTweetsLoading,
 	selectTweetsItems,
+	selectTweetsLoadingState,
 } from '../../store/ducks/tweets';
 import { ContentDivider } from '../../containers/Elements';
 import { TweetMini } from './TweetMini';
@@ -18,17 +20,21 @@ interface TweetsListProps {
 
 export const TweetsList: React.FC<TweetsListProps> = (): React.ReactElement | null => {
 	const tweets = useSelector(selectTweetsItems);
-	const isLoading = useSelector(selectIsTweetsLoading);
-	const isLoaded = useSelector(selectIsTweetsLoaded);
+	const loadingState = useSelector(selectTweetsLoadingState);
 
 	const dispatch = useDispatch();
 
 	React.useEffect(() => {
-		if (!isLoaded && !isLoading) dispatch(fetchTweets());
-	}, [dispatch, isLoaded, isLoading]);
+		if (loadingState === LoadingState.ERROR) return;
+		if (
+			loadingState !== LoadingState.LOADED &&
+			loadingState !== LoadingState.LOADING
+		)
+			dispatch(fetchTweets());
+	}, [dispatch, loadingState]);
 
-	if (isLoading) return <LoaderCircular />;
-	if (!isLoaded) return null;
+	if (loadingState === LoadingState.LOADING) return <LoaderCircular />;
+	if (loadingState !== LoadingState.LOADED) return null;
 
 	const showSuggestions = false;
 
@@ -37,7 +43,7 @@ export const TweetsList: React.FC<TweetsListProps> = (): React.ReactElement | nu
 			{tweets
 				.filter((_, i) => i < 3)
 				.map((item: TweetInterface, index: number) => (
-					<TweetMini {...item} />
+					<TweetMini {...item} key={item._id} />
 				))}
 			{showSuggestions && (
 				<>
@@ -50,7 +56,7 @@ export const TweetsList: React.FC<TweetsListProps> = (): React.ReactElement | nu
 			{tweets
 				.filter((_, i) => i > 3)
 				.map((item: TweetInterface, index: number) => (
-					<TweetMini {...item} />
+					<TweetMini {...item} key={item._id} />
 				))}
 		</>
 	);

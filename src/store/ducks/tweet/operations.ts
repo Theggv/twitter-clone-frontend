@@ -30,7 +30,7 @@ export const setTweet = (
 });
 
 export const fetchTweet = (
-	payload: TweetInterface['id']
+	payload: TweetInterface['_id']
 ): FetchTweetActionInterface => ({
 	type: TweetActionsType.FETCH_TWEET,
 	payload,

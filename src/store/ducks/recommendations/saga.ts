@@ -1,5 +1,5 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
-import { UsersApi } from '../../../services/api/usersApi';
+import { UsersApi } from '../../../services/api/jsonserver/usersApi';
 import { RecommendationsActionsType } from './actions';
 import { setRecommended, setRecommendedLoadingState } from './operations';
 import { LoadingState } from './types';

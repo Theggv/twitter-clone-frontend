@@ -1,4 +1,4 @@
-import { UserInterface } from '../recommendations';
+import { UserInterface } from '../user';
 
 export enum LoadingState {
 	LOADED = 'LOADED',
@@ -8,7 +8,7 @@ export enum LoadingState {
 }
 
 export interface TweetInterface {
-	id: string;
+	_id: string;
 	createdAtUTC: string;
 	user: UserInterface;
 

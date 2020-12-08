@@ -2,8 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { Route, Switch } from 'react-router-dom';
 
-import SignIn from './pages/SignIn';
-import Home from './pages/Home';
+import { Auth } from './pages/Auth';
+import { Home } from './pages/Home';
 
 const useStyles = makeStyles((theme) => ({
 	app: {
@@ -17,7 +17,7 @@ const App: React.FC = () => {
 	return (
 		<div className={classes.app}>
 			<Switch>
-				<Route path='/login' component={SignIn}></Route>
+				<Route path='/auth' component={Auth}></Route>
 				<Route path='/' component={Home}></Route>
 			</Switch>
 		</div>

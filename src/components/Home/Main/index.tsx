@@ -8,11 +8,11 @@ const useStyles = makeStyles((theme) => ({
 			maxWidth: 920,
 		},
 		[theme.breakpoints.down(1005)]: {
-			flex: '1 1 600px',
+			flex: '2 1 600px',
 			maxWidth: 600,
 		},
 		[theme.breakpoints.down(750)]: {
-			flex: '1 1 600px',
+			flex: '2 1 600px',
 		},
 		display: 'flex',
 		flexDirection: 'row',

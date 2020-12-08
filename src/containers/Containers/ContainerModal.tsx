@@ -1,4 +1,4 @@
-import { Dialog, makeStyles } from '@material-ui/core';
+import { Dialog, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import React from 'react';
 
 import CloseIcon from '@material-ui/icons/Close';
@@ -24,6 +24,15 @@ const useStyles = makeStyles((theme) => ({
 	content: {
 		overflow: 'auto',
 		padding: '10px 15px',
+	},
+	fullWidthRoot: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		width: '100%',
+		height: '100%',
+		backgroundColor: 'white',
+		zIndex: 2000,
 	},
 }));
 
@@ -51,14 +60,27 @@ export const ContainerModal: React.FC<
 	fullWidth = false,
 }) => {
 	const classes = useStyles();
+	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.down(700));
+
+	if (matches && !visible) return null;
+
+	const Wrapper: React.FC = ({ children }) =>
+		matches ? (
+			<div className={classes.fullWidthRoot}>{children} </div>
+		) : (
+			<Dialog
+				open={visible}
+				onClose={onClose}
+				className={classes.dialog}
+				fullWidth={fullWidth}
+			>
+				{children}
+			</Dialog>
+		);
 
 	return (
-		<Dialog
-			open={visible}
-			onClose={onClose}
-			className={classes.dialog}
-			fullWidth={fullWidth}
-		>
+		<Wrapper>
 			{!withoutTitle && (
 				<ContainerItem hoverType='disabled' className={classes.title}>
 					{!disableExitButton && (
@@ -73,6 +95,6 @@ export const ContainerModal: React.FC<
 				</ContainerItem>
 			)}
 			<div className={clsx(classes.content, className)}>{children}</div>
-		</Dialog>
+		</Wrapper>
 	);
 };

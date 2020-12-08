@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { LoaderCircular } from '../../containers/Loaders';
 import {
-	selectIsTweetLoading,
-	selectIsTweetLoaded,
 	fetchTweet,
 	selectTweetContent,
+	selectTweetLoadingState,
+	LoadingState,
 } from '../../store/ducks/tweet';
 import { TweetFull } from './TweetFull';
 
@@ -19,17 +19,24 @@ export const Status: React.FC = () => {
 	const dispatch = useDispatch();
 	const tweet = useSelector(selectTweetContent);
 
-	const isLoading = useSelector(selectIsTweetLoading);
-	const isLoaded = useSelector(selectIsTweetLoaded);
+	const loadingState = useSelector(selectTweetLoadingState);
 
 	React.useEffect(() => {
-		if (tweet?.id !== tweetId && !isLoading) dispatch(fetchTweet(tweetId));
+		if (loadingState === LoadingState.ERROR) return;
+
+		if (tweet?._id !== tweetId && loadingState !== LoadingState.LOADING)
+			dispatch(fetchTweet(tweetId));
 
 		window.scroll(0, 0);
-	}, [dispatch, tweetId, tweet, isLoading]);
+	}, [dispatch, tweetId, tweet, loadingState]);
 
-	if (isLoading) return <LoaderCircular />;
-	if (!isLoaded || !tweet || tweet?.id !== tweetId) return null;
+	if (loadingState === LoadingState.LOADING) return <LoaderCircular />;
+	if (
+		loadingState !== LoadingState.LOADED ||
+		!tweet ||
+		tweet?._id !== tweetId
+	)
+		return null;
 
 	return <TweetFull {...tweet}></TweetFull>;
 };

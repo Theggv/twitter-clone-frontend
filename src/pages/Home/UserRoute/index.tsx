@@ -4,14 +4,14 @@ import { NotFoundPage } from '../NotFoundPage';
 import { FullTweetPage } from './FullTweetPage';
 import { LikesPage } from './LikesPage';
 import { MediaPage } from './MediaPage';
-import { TweetsPage } from './TweetsPage';
+import { UserPage } from './UserPage';
 import { WithRepliesPage } from './WithRepliesPage';
 
 export const UserRoute: React.FC = () => {
 	return (
 		<Switch>
 			<Route exact path='/:userName'>
-				<TweetsPage />
+				<UserPage />
 			</Route>
 			<Route exact path='/:userName/with_replies'>
 				<WithRepliesPage />

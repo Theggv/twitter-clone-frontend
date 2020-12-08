@@ -37,11 +37,12 @@ const useStyles = makeStyles((theme) => ({
 		minWidth: '68px',
 		maxWidth: '275px',
 
-		flex: '1 1',
+		flex: '1 0 auto',
 		display: 'block',
 
 		overflowX: 'hidden',
 		overflowY: 'auto',
+		boxSizing: 'border-box',
 		height: '100vh',
 
 		position: 'sticky',

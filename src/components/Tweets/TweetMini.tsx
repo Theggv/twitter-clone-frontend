@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
 export interface TweetProps extends TweetInterface {}
 
 export const TweetMini: React.FC<TweetProps> = ({
-	id,
+	_id,
 	createdAtUTC,
 	user,
 	text,
@@ -125,7 +125,7 @@ export const TweetMini: React.FC<TweetProps> = ({
 	);
 
 	const handleContainerClick = () => {
-		history.push(`/${user.userName}/status/${id}`);
+		history.push(`/${user.username}/status/${_id}`);
 	};
 
 	const handleClickButton = (e: any) => {
@@ -143,7 +143,7 @@ export const TweetMini: React.FC<TweetProps> = ({
 				titleButton={() => titleButton}
 			>
 				<div className={classes.headerText}>
-					{user?.fullName}
+					{user?.fullname}
 					{user?.verified && (
 						<VerifiedUserIcon
 							color='primary'
@@ -152,11 +152,11 @@ export const TweetMini: React.FC<TweetProps> = ({
 					)}
 				</div>
 				<div className={classes.headerUrl}>
-					<span>@{user?.userName}</span>
+					<span>@{user?.username}</span>
 					&nbsp;·&nbsp;
 					<Link
 						className={classes.link}
-						to={`/${user.userName}/status/${id}`}
+						to={`/${user.username}/status/${_id}`}
 						onClick={handleClickButton}
 					>
 						<span>{formatDateDifference(createdAtUTC)}</span>

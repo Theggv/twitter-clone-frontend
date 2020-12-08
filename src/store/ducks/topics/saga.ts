@@ -1,5 +1,5 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
-import { TweetsApi } from '../../../services/api/tweetsApi';
+import { TweetsApi } from '../../../services/api/backend/tweetsApi';
 import { TopicsActionTypes } from './actions';
 import { setTopics, setTopicsLoadingState } from './operations';
 import { LoadingState } from './types';

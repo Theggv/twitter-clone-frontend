@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
-import { Link, makeStyles, Typography } from '@material-ui/core';
+import { Link, makeStyles } from '@material-ui/core';
 
 import TwitterIcon from '@material-ui/icons/Twitter';
-import TwitterInput from './TwitterInput';
-import TwitterSelect from './TwitterSelect';
 import {
 	ContainerModal,
 	ContainerModalProps,
-} from '../../containers/Containers';
+} from '../../../containers/Containers';
+import { InputElement } from '../InputElement';
+import { SelectElement } from '../SelectElement';
+import { NameInput } from './NameInput';
 
 const useStyles = makeStyles((theme) => ({
 	header: {
@@ -76,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface SignUpDialogProps extends ContainerModalProps {}
 
-const SignUpDialog: React.FC<SignUpDialogProps> = ({
+export const SignUpModal: React.FC<SignUpDialogProps> = ({
 	visible = false,
 	onClose,
 }) => {
@@ -119,14 +120,6 @@ const SignUpDialog: React.FC<SignUpDialogProps> = ({
 		selectedDay: '',
 		selectedYear: '',
 	});
-
-	const nameValidation = (text: string): string | undefined => {
-		if (!text.length) return 'Как вас зовут?';
-
-		if (name !== text) setName((prev) => text);
-
-		return undefined;
-	};
 
 	const phoneValidation = (text: string): string | undefined => {
 		if (email !== text) setEmail((prev) => text);
@@ -179,21 +172,15 @@ const SignUpDialog: React.FC<SignUpDialogProps> = ({
 			disableExitButton
 		>
 			<div className={classes.dialogTitle}>Создайте учетную запись</div>
-			<TwitterInput
-				autoFocus
-				fullWidth
-				title='Имя'
-				maxLength={50}
-				validationFunc={(text) => nameValidation(text)}
-			></TwitterInput>
-			<TwitterInput
+			<NameInput onChange={(text) => {}} />
+			<InputElement
 				fullWidth
 				title={usePhone ? 'Телефон' : 'Адрес электронной почты'}
 				validationFunc={(text) =>
 					usePhone ? phoneValidation(text) : emailValidation(text)
 				}
 				useDebounceDelay={250}
-			></TwitterInput>
+			></InputElement>
 			<Link
 				className={classes.phoneMailButton}
 				onClick={() => setUsePhone((prev) => !prev)}
@@ -203,14 +190,14 @@ const SignUpDialog: React.FC<SignUpDialogProps> = ({
 				{usePhone ? 'Использовать эл. почту' : 'Использовать телефон'}
 			</Link>
 
-			<Typography className={classes.birthdayText}>
+			<div className={classes.birthdayText}>
 				<b>Дата рождения</b>
 				<br></br>
 				Эта информация не будет общедоступной. Подтвердите свой возраст,
 				даже если эта учетная запись предназначена для компании,
 				домашнего животного и т. д.
 				<div className={classes.birthdayInputs}>
-					<TwitterSelect
+					<SelectElement
 						className={classes.birthdayMonth}
 						title='Месяц'
 						items={bdayState.months
@@ -222,8 +209,8 @@ const SignUpDialog: React.FC<SignUpDialogProps> = ({
 								selectedMonth: item,
 							}));
 						}}
-					></TwitterSelect>
-					<TwitterSelect
+					></SelectElement>
+					<SelectElement
 						className={classes.birthdayDay}
 						title='День'
 						items={bdayState.days(
@@ -237,8 +224,8 @@ const SignUpDialog: React.FC<SignUpDialogProps> = ({
 								selectedDay: item,
 							}))
 						}
-					></TwitterSelect>
-					<TwitterSelect
+					></SelectElement>
+					<SelectElement
 						className={classes.birthdayYear}
 						title='Год'
 						items={bdayState.years(
@@ -251,11 +238,9 @@ const SignUpDialog: React.FC<SignUpDialogProps> = ({
 								selectedYear: item,
 							}))
 						}
-					></TwitterSelect>
+					></SelectElement>
 				</div>
-			</Typography>
+			</div>
 		</ContainerModal>
 	);
 };
-
-export default SignUpDialog;

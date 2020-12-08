@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles, TextField, TextFieldProps } from '@material-ui/core';
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebounce } from '../../helpers/useDebounce';
 
-interface TwitterInputProps {
+interface InputElementProps {
 	title: string;
 	maxLength?: number;
 	validationFunc?: (text: string) => string | undefined;
@@ -16,12 +16,12 @@ const useInput = (initialValue: string, maxLength?: number) => {
 	const [state, setState] = useState({ isUsed: false, isInit: false });
 
 	useEffect(() => {
-		if (!state.isInit) {
-			setState({ ...state, isInit: true });
-			return;
-		}
+		if (!state.isInit) setState({ ...state, isInit: true });
+	}, [state]);
 
-		if (!state.isUsed) setState({ ...state, isUsed: true });
+	useEffect(() => {
+		if (value && state.isInit && !state.isUsed)
+			setState({ ...state, isUsed: true });
 	}, [state, value]);
 
 	return {
@@ -56,32 +56,34 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const TwitterInput: React.FC<TextFieldProps & TwitterInputProps> = (props) => {
+export const InputElement: React.FC<TextFieldProps & InputElementProps> = (
+	props
+) => {
 	const classes = useStyles();
 	const input = useInput('', props.maxLength);
-	const [validationText, setValidationText] = useState<string | undefined>(
-		undefined
-	);
+	const [errorText, setErrorText] = useState<string | undefined>(undefined);
 
-	const debouncedValidation = useDebouncedCallback(() => {
-		if (props.validationFunc) {
-			setValidationText((prev) => props.validationFunc!(input.value));
+	const deboncedInputValue = useDebounce(input.value, 200);
+
+	useEffect(() => {
+		if (input.isUsed && props.validationFunc) {
+			let validation = props.validationFunc!(deboncedInputValue);
+			setErrorText((prev) => (validation === prev ? prev : validation));
 		}
-	}, props.useDebounceDelay || 50);
+	}, [deboncedInputValue, props.validationFunc, input.isUsed]);
 
 	useEffect(() => {
-		debouncedValidation.callback();
-	}, [debouncedValidation, input.value]);
+		if (input.isUsed) {
+			input.clear();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [props.title]);
 
-	useEffect(() => {
-		if (input.isUsed) input.clear();
-	}, [input, props.title]);
-
-	const hasError = input.isUsed && validationText !== undefined;
+	const hasError = input.isUsed && errorText !== undefined;
 
 	const helperText = (
 		<div className={classes.helperText}>
-			<div>{hasError && validationText}</div>
+			<div>{hasError && errorText}</div>
 			{props.maxLength && (
 				<div className={classes.statusText}>
 					{input.value.length}/{props.maxLength}
@@ -90,10 +92,11 @@ const TwitterInput: React.FC<TextFieldProps & TwitterInputProps> = (props) => {
 		</div>
 	);
 
+	console.log('render of InputElement ' + props.title);
+
 	return (
 		<TextField
 			autoFocus={props.autoFocus}
-			{...input.bind}
 			label={props.title}
 			helperText={helperText}
 			fullWidth={props.fullWidth}
@@ -103,8 +106,7 @@ const TwitterInput: React.FC<TextFieldProps & TwitterInputProps> = (props) => {
 				disableAnimation: true,
 			}}
 			variant='filled'
+			{...input.bind}
 		></TextField>
 	);
 };
-
-export default TwitterInput;

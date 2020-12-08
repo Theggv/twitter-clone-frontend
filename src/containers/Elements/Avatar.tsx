@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 		height: 134,
 	},
 	placeholder: {
-		backgroundColor: 'rgba(128, 128, 128, 0.5)',
+		backgroundColor: 'rgb(192, 192, 192)',
 	},
 }));
 

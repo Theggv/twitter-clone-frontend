@@ -2,8 +2,8 @@ import { Button, makeStyles } from '@material-ui/core';
 import React from 'react';
 
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
-import { UserInterface } from '../../../store/ducks/recommendations';
 import { ContainerAvatar } from '../../../containers/Containers';
+import { UserInterface } from '../../../store/ducks/user';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -63,7 +63,7 @@ export const UserSuggestion: React.FC<UserSuggestionProps> = ({
 			<div className={classes.top}>
 				<div className={classes.left}>
 					<div className={classes.userInfo}>
-						{user.fullName}
+						{user.fullname}
 						{user.verified ? (
 							<VerifiedUserIcon
 								color='primary'
@@ -71,7 +71,7 @@ export const UserSuggestion: React.FC<UserSuggestionProps> = ({
 							/>
 						) : null}
 					</div>
-					<div className={classes.url}>@{user.userName}</div>
+					<div className={classes.url}>@{user.username}</div>
 				</div>
 				<div className={classes.right}>
 					<Button
@@ -83,11 +83,9 @@ export const UserSuggestion: React.FC<UserSuggestionProps> = ({
 					</Button>
 				</div>
 			</div>
-			{detail && user.description ? (
+			{detail && user.about ? (
 				<div className={classes.bottom}>
-					<div className={classes.description}>
-						{user.description}
-					</div>
+					<div className={classes.description}>{user.about}</div>
 				</div>
 			) : null}
 		</ContainerAvatar>

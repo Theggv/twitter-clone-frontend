@@ -2,7 +2,6 @@ import {
 	FormControl,
 	FormControlProps,
 	InputLabel,
-	// makeStyles,
 	NativeSelect,
 } from '@material-ui/core';
 import React, { useState } from 'react';
@@ -14,13 +13,9 @@ interface TwitterSelectProps {
 	onItemChange?: (item: string) => void;
 }
 
-// const useStyles = makeStyles((theme) => ({}));
-
-const TwitterSelect: React.FC<FormControlProps & TwitterSelectProps> = (
+export const SelectElement: React.FC<FormControlProps & TwitterSelectProps> = (
 	props
 ) => {
-	// const classes = useStyles();
-
 	const [state, setState] = useState({ selected: '' });
 
 	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -49,5 +44,3 @@ const TwitterSelect: React.FC<FormControlProps & TwitterSelectProps> = (
 		</FormControl>
 	);
 };
-
-export default TwitterSelect;

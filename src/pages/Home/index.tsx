@@ -7,6 +7,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { SearchPage } from './SearchPage';
 import { NotFoundPage } from './NotFoundPage';
 import { UserRoute } from './UserRoute';
+import { ProtectedRoute } from '../../components/Route/ProtectedRoute';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Home: React.FC = (): React.ReactElement => {
+export const Home: React.FC = (): React.ReactElement => {
 	const classes = useStyles();
 
 	return (
@@ -24,25 +25,17 @@ const Home: React.FC = (): React.ReactElement => {
 			<Header></Header>
 			<Main>
 				<Switch>
-					<Route exact path='/'>
-						<Redirect to='/home' />
-					</Route>
-					<Route exact path='/home'>
-						<DefaultPage />
-					</Route>
-					<Route path='/:userName'>
-						<UserRoute />
-					</Route>
-					<Route path='/search'>
-						<SearchPage />
-					</Route>
-					<Route>
-						<NotFoundPage />
-					</Route>
+					<ProtectedRoute
+						exact
+						path='/'
+						component={() => <Redirect to='/home' />}
+					/>
+					<ProtectedRoute exact path='/home' component={DefaultPage} />
+					<Route path='/search' component={SearchPage} />
+					<Route path='/:userName' component={UserRoute} />
+					<Route component={NotFoundPage}></Route>
 				</Switch>
 			</Main>
 		</section>
 	);
 };
-
-export default Home;
