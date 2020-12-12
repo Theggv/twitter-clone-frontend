@@ -6,6 +6,7 @@ import { ButtonWithIcon } from '../../containers/Buttons';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { ContainerItem } from '../../containers/Containers';
 import { useHistory } from 'react-router-dom';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -19,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: 'column',
 
 		backgroundColor: 'white',
-		padding: '10px 5px',
+		padding: '0 5px',
+		justifyContent: 'center',
 	},
 	top: {
 		display: 'flex',
@@ -37,11 +39,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface TopBlockProps {
+	className?: string;
 	title: React.ReactNode;
 	showBackButton?: boolean;
 }
 
 export const TopBlock: React.FC<TopBlockProps> = ({
+	className,
 	children,
 	title,
 	showBackButton = false,
@@ -56,7 +60,10 @@ export const TopBlock: React.FC<TopBlockProps> = ({
 	};
 
 	return (
-		<ContainerItem hoverType='disabled' className={classes.root}>
+		<ContainerItem
+			hoverType='disabled'
+			className={clsx(classes.root, className)}
+		>
 			<div className={classes.top}>
 				{showBackButton && (
 					<ButtonWithIcon

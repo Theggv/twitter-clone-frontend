@@ -1,21 +1,15 @@
 import React from 'react';
 import { InputElement } from '../InputElement';
+import { SignUpActionTypes, SignUpReducer } from './reducer/SignUpReducer';
 
-interface NameInputProps {
-	onChange: (name: string) => void;
-}
-
-export const NameInput: React.FC<NameInputProps> = ({ onChange }) => {
-	const [name, setName] = React.useState('');
-
-	React.useEffect(() => {
-		onChange(name);
-	}, [onChange, name]);
+export const NameInput: React.FC = () => {
+	const [state, dispatch] = SignUpReducer();
 
 	const nameValidation = (text: string): string | undefined => {
 		if (!text.length) return 'Как вас зовут?';
 
-		if (name !== text) setName((prev) => text);
+		if (state.name !== text)
+			dispatch({ type: SignUpActionTypes.SET_NAME, payload: text });
 
 		return undefined;
 	};

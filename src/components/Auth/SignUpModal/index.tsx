@@ -10,6 +10,9 @@ import {
 import { InputElement } from '../InputElement';
 import { SelectElement } from '../SelectElement';
 import { NameInput } from './NameInput';
+import { SignUpActionTypes, SignUpReducer } from './reducer/SignUpReducer';
+import { EmailInput } from './EmailInput';
+import { SignUpForm } from './SignUpForm';
 
 const useStyles = makeStyles((theme) => ({
 	header: {
@@ -82,70 +85,10 @@ export const SignUpModal: React.FC<SignUpDialogProps> = ({
 	onClose,
 }) => {
 	const classes = useStyles();
-
-	const [usePhone, setUsePhone] = useState(true);
-	const [name, setName] = useState('');
-	const [email, setEmail] = useState('');
-	const [isValidationPassed, setValidationPassed] = useState(false);
-
-	const [bdayState, setBdayState] = useState({
-		months: [
-			{ name: 'января', maxDays: 31 },
-			{ name: 'февраля', maxDays: 29 },
-			{ name: 'марта', maxDays: 31 },
-			{ name: 'апреля', maxDays: 30 },
-			{ name: 'мая', maxDays: 31 },
-			{ name: 'июня', maxDays: 30 },
-			{ name: 'июля', maxDays: 31 },
-			{ name: 'августа', maxDays: 31 },
-			{ name: 'сентября', maxDays: 30 },
-			{ name: 'октября', maxDays: 31 },
-			{ name: 'ноября', maxDays: 30 },
-			{ name: 'декабря', maxDays: 31 },
-			{ name: '', maxDays: 31, hidden: true },
-		],
-		days: (maxDays: number) =>
-			Array(maxDays)
-				.fill(0)
-				.map((_, i) => i + 1),
-		years: (isFebruary: boolean) =>
-			Array(new Date().getFullYear() - 1900 + 1)
-				.fill(0)
-				.map((_, i) => new Date().getFullYear() - i)
-				.filter((i) => {
-					if (isFebruary) return i % 4 === 0;
-					return i;
-				}),
-		selectedMonth: '',
-		selectedDay: '',
-		selectedYear: '',
-	});
-
-	const phoneValidation = (text: string): string | undefined => {
-		if (email !== text) setEmail((prev) => text);
-		return undefined;
-	};
-
-	const emailValidation = (text: string): string | undefined => {
-		if (email !== text) setEmail((prev) => text);
-		return undefined;
-	};
-
+	
 	useEffect(() => {
 		if (visible) document.title = 'Зарегистрироваться в Твиттере / Твиттер';
 	}, [visible]);
-
-	useEffect(() => {
-		let isValidationFailed =
-			!name ||
-			!email ||
-			!bdayState.selectedMonth ||
-			!bdayState.selectedDay ||
-			!bdayState.selectedYear;
-
-		if (isValidationFailed !== isValidationPassed)
-			setValidationPassed((prev) => isValidationFailed);
-	}, [name, email, bdayState, isValidationPassed]);
 
 	const titleBlock = (
 		<div className={classes.header}>
@@ -156,7 +99,7 @@ export const SignUpModal: React.FC<SignUpDialogProps> = ({
 					className={classes.headerButtonNext}
 					variant='contained'
 					color='primary'
-					disabled={isValidationPassed}
+					disabled
 				>
 					Далее
 				</Button>
@@ -171,76 +114,7 @@ export const SignUpModal: React.FC<SignUpDialogProps> = ({
 			title={() => titleBlock}
 			disableExitButton
 		>
-			<div className={classes.dialogTitle}>Создайте учетную запись</div>
-			<NameInput onChange={(text) => {}} />
-			<InputElement
-				fullWidth
-				title={usePhone ? 'Телефон' : 'Адрес электронной почты'}
-				validationFunc={(text) =>
-					usePhone ? phoneValidation(text) : emailValidation(text)
-				}
-				useDebounceDelay={250}
-			></InputElement>
-			<Link
-				className={classes.phoneMailButton}
-				onClick={() => setUsePhone((prev) => !prev)}
-				component='button'
-				variant='body2'
-			>
-				{usePhone ? 'Использовать эл. почту' : 'Использовать телефон'}
-			</Link>
-
-			<div className={classes.birthdayText}>
-				<b>Дата рождения</b>
-				<br></br>
-				Эта информация не будет общедоступной. Подтвердите свой возраст,
-				даже если эта учетная запись предназначена для компании,
-				домашнего животного и т. д.
-				<div className={classes.birthdayInputs}>
-					<SelectElement
-						className={classes.birthdayMonth}
-						title='Месяц'
-						items={bdayState.months
-							.filter((i) => !i.hidden)
-							.map((i) => i.name)}
-						onItemChange={(item: string) => {
-							setBdayState((prev) => ({
-								...prev,
-								selectedMonth: item,
-							}));
-						}}
-					></SelectElement>
-					<SelectElement
-						className={classes.birthdayDay}
-						title='День'
-						items={bdayState.days(
-							bdayState.months.find(
-								(i) => i.name === bdayState.selectedMonth
-							)!.maxDays
-						)}
-						onItemChange={(item: string) =>
-							setBdayState((prev) => ({
-								...prev,
-								selectedDay: item,
-							}))
-						}
-					></SelectElement>
-					<SelectElement
-						className={classes.birthdayYear}
-						title='Год'
-						items={bdayState.years(
-							bdayState.selectedMonth === 'февраля' &&
-								bdayState.selectedDay === '29'
-						)}
-						onItemChange={(item: string) =>
-							setBdayState((prev) => ({
-								...prev,
-								selectedYear: item,
-							}))
-						}
-					></SelectElement>
-				</div>
-			</div>
+			<SignUpForm />
 		</ContainerModal>
 	);
 };

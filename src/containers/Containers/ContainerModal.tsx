@@ -63,6 +63,8 @@ export const ContainerModal: React.FC<
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.down(700));
 
+	const memoChildren = React.useMemo(() => children, [children]);
+
 	if (matches && !visible) return null;
 
 	const Wrapper: React.FC = ({ children }) =>
@@ -94,7 +96,9 @@ export const ContainerModal: React.FC<
 					</div>
 				</ContainerItem>
 			)}
-			<div className={clsx(classes.content, className)}>{children}</div>
+			<div className={clsx(classes.content, className)}>
+				{memoChildren}
+			</div>
 		</Wrapper>
 	);
 };

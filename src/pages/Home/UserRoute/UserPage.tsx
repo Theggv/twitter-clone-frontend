@@ -1,4 +1,4 @@
-import { makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
+import { Button, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import React from 'react';
 import { ContentBlock } from '../../../components/Home/Main/ContentBlock';
 import { TopBlock } from '../../../components/TopBlock';
@@ -24,6 +24,7 @@ import {
 
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import { NotFoundPage } from '../NotFoundPage';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
 	header: {
@@ -45,6 +46,15 @@ const useStyles = makeStyles((theme) => ({
 	headerButton: {
 		padding: '0 8px',
 	},
+	buttonStopFollow: {
+		width: 160,
+		marginRight: 10,
+		transition: 'visibility 0s, opacity 0.1s linear',
+	},
+	buttonHidden: {
+		visibility: 'hidden',
+		opacity: 0,
+	},
 }));
 
 //header photo 200px
@@ -55,15 +65,10 @@ export const UserPage: React.FC = () => {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up(1005));
 
-	const recs: TopicProps[] = [
-		{ title: 'PROUD OF HARRY', actualWhere: 'Россия', numTweets: 56500 },
-		{ title: 'Добрый', actualWhere: 'Россия', numTweets: 2407 },
-		{ title: 'Выздоравливайте', actualWhere: 'Россия' },
-		{ title: '#SaveHannibal', actualWhere: 'Россия', numTweets: 5649 },
-		{ title: 'иркутской', actualWhere: 'Россия' },
-	];
-
 	const { userName } = useParams<{ userName: string }>();
+	const [buttonHidden, setButtonHidden] = React.useState(
+		document.documentElement.scrollTop < 255
+	);
 
 	const dispatch = useDispatch();
 	const user = useSelector(selectUserItem);
@@ -72,6 +77,18 @@ export const UserPage: React.FC = () => {
 	React.useEffect(() => {
 		dispatch(fetchUser(userName));
 	}, [dispatch, userName]);
+
+	React.useEffect(() => {
+		const scrollEvent = (e: any) => {
+			setButtonHidden((prev) => document.documentElement.scrollTop < 255);
+		};
+
+		document.addEventListener('scroll', scrollEvent);
+
+		return () => {
+			document.removeEventListener('scroll', scrollEvent);
+		};
+	}, []);
 
 	if (loadingState === LoadingState.ERROR) return <NotFoundPage />;
 	if (loadingState !== LoadingState.LOADED) return null;
@@ -95,6 +112,16 @@ export const UserPage: React.FC = () => {
 									/>
 								)}
 							</div>
+							<Button
+								className={clsx(
+									classes.buttonStopFollow,
+									buttonHidden && classes.buttonHidden
+								)}
+								color='primary'
+								variant='contained'
+							>
+								Читаемые
+							</Button>
 						</div>
 					}
 				></TopBlock>
@@ -105,7 +132,27 @@ export const UserPage: React.FC = () => {
 				<SideBar>
 					<Search></Search>
 					<UsersSuggestion title={'Вам может понравиться'} />
-					<TopicsSuggestion recomendations={recs} />
+					<TopicsSuggestion
+						recomendations={[
+							{
+								title: 'PROUD OF HARRY',
+								actualWhere: 'Россия',
+								numTweets: 56500,
+							},
+							{
+								title: 'Добрый',
+								actualWhere: 'Россия',
+								numTweets: 2407,
+							},
+							{ title: 'Выздоравливайте', actualWhere: 'Россия' },
+							{
+								title: '#SaveHannibal',
+								actualWhere: 'Россия',
+								numTweets: 5649,
+							},
+							{ title: 'иркутской', actualWhere: 'Россия' },
+						]}
+					/>
 				</SideBar>
 			)}
 		</>

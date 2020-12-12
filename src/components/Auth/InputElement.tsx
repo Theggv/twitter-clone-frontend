@@ -13,7 +13,10 @@ interface InputElementProps {
 
 const useInput = (initialValue: string, maxLength?: number) => {
 	const [value, setValue] = useState(initialValue);
-	const [state, setState] = useState({ isUsed: false, isInit: false });
+	const [state, setState] = useState({
+		isUsed: false,
+		isInit: false,
+	});
 
 	useEffect(() => {
 		if (!state.isInit) setState({ ...state, isInit: true });
@@ -60,17 +63,26 @@ export const InputElement: React.FC<TextFieldProps & InputElementProps> = (
 	props
 ) => {
 	const classes = useStyles();
-	const input = useInput(props.value as string || '', props.maxLength);
+	const input = useInput((props.value as string) || '', props.maxLength);
+
 	const [errorText, setErrorText] = useState<string | undefined>(undefined);
+	const [hasError, setHasError] = useState(false);
 
 	const deboncedInputValue = useDebounce(input.value, 200);
 
 	useEffect(() => {
 		if (input.isUsed && props.validationFunc) {
 			let validation = props.validationFunc!(deboncedInputValue);
+
 			setErrorText((prev) => (validation === prev ? prev : validation));
 		}
-	}, [deboncedInputValue, props.validationFunc, input.isUsed]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [deboncedInputValue]);
+
+	useEffect(() => {
+		setHasError((prev) => input.isUsed && errorText !== undefined);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [errorText]);
 
 	useEffect(() => {
 		if (input.isUsed) {
@@ -78,8 +90,6 @@ export const InputElement: React.FC<TextFieldProps & InputElementProps> = (
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [props.title]);
-
-	const hasError = input.isUsed && errorText !== undefined;
 
 	const helperText = (
 		<div className={classes.helperText}>
